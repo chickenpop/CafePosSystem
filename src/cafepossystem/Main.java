@@ -1,16 +1,21 @@
 package cafepossystem;
 
 import java.util.Scanner;
+import cafepossystem.data.Data;
+import cafepossystem.management.menu.CoffeeMenuMain;
 
 public class Main {
 
 	public static void main(String[] args) {
 
+		// 데이터 로드
+		Data.loadCoffeeMenu();
+		
 		Scanner in = new Scanner(System.in);
 		
 		while(true) {
 			Output.logo();
-			Output.title();
+			Output.title("  카페 관리 시스템");
 			Output.menu();
 			
 			System.out.print("이동 메뉴 선택: ");
@@ -19,7 +24,9 @@ public class Main {
 			if(input.equals("1")) {
 				System.out.println("주문 관리");
 			} else if(input.equals("2")) {
-				System.out.println("메뉴 관리");
+				
+				CoffeeMenuMain cm = new CoffeeMenuMain();
+				cm.managementCoffeeMenu();
 				
 			} else if(input.equals("3")) {
 				System.out.println("매출 관리");
@@ -30,9 +37,7 @@ public class Main {
 				in.close();
 				break;
 			} else {
-				System.out.println("잘못된 입력입니다.");
-				System.out.print("다시 입력하시겠습니까?(엔터를 입력해주세요.)");
-				input = in.nextLine();
+				Output.pause();
 			}
 		}
 

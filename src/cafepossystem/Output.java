@@ -1,5 +1,7 @@
 package cafepossystem;
 
+import java.util.Scanner;
+
 public class Output {
 	
 	public static void logo() {
@@ -22,9 +24,9 @@ public class Output {
 		
 	}
 	
-	public static void title() {
+	public static void title(String titleName) {
 		bar();
-		System.out.println("\t    카페 정보 관리 시스템");
+		System.out.printf("\t     %s\n", titleName);
 	}
 	
 	public static void menu() {
@@ -36,6 +38,17 @@ public class Output {
 		System.out.print("\t|0. 종료      |");
 		System.out.println("\t|             |");
 		bar();
+	}
+	
+	public static void subTitle(String subTitle) {
+		System.out.printf("-%s-\n", subTitle);
+	}
+	
+	public static void pause() {
+		Scanner in = new Scanner(System.in);
+		System.out.println("잘못된 입력입니다.");
+		System.out.print("다시 입력하시겠습니까?(엔터를 입력해주세요.)");
+		String input = in.nextLine();
 	}
 	
 	public static void bar() {
