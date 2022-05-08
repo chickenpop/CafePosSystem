@@ -1,6 +1,6 @@
 package cafepossystem;
 
-public class CafePosSystemOutput {
+public class Output {
 	
 	public static void logo() {
 		bar();
