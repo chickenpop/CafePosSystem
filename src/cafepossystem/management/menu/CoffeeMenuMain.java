@@ -10,15 +10,14 @@ public class CoffeeMenuMain {
 	public void managementCoffeeMenu() {
 			
 		Scanner in = new Scanner(System.in);
-		// TODO 페이징 기능 수정 필요 (2022. 5. 8. 오후 11:30:33)
 		int currentPage = 1; // 현재 페이지
 		int pageBlock = 5;  // 페이지 당 목록 수
-		int totalPage = Data.coffeeMenuList.size()/pageBlock + ((Data.coffeeMenuList.size()%pageBlock) > 0 ? 1 : 0); // 총 페이지		
-		
 		while(true) {
 			
 			Output.title("메뉴 관리 시스템");
 			Output.bar();
+			
+			int totalPage = Data.coffeeMenuList.size()/pageBlock + ((Data.coffeeMenuList.size()%pageBlock) > 0 ? 1 : 0); // 총 페이지		
 			
 			int currentBlock = currentPage-1;	// 현재 목록 번호
 			int startNum = currentBlock*pageBlock+1;
@@ -80,8 +79,10 @@ public class CoffeeMenuMain {
 					
 					CoffeeMenu cf = new CoffeeMenu(seq, name, Integer.parseInt(price));
 					
+					// 데이터 저장
 					Data.coffeeMenuList.add(cf);
 					Data.saveCoffeeMenu();
+					Data.coffeeMenuList.clear();
 					Data.loadCoffeeMenu();
 					
 				} else if(input.equals("수정")) {
