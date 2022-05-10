@@ -14,6 +14,8 @@ public class CoffeeMenuMain {
 		int pageBlock = 5;  // 페이지 당 목록 수
 		while(true) {
 			
+			System.out.println();
+			System.out.println();
 			Output.title("메뉴 관리 시스템");
 			Output.bar();
 			
@@ -81,14 +83,68 @@ public class CoffeeMenuMain {
 					
 					// 데이터 저장
 					Data.coffeeMenuList.add(cf);
-					Data.saveCoffeeMenu();
-					Data.coffeeMenuList.clear();
-					Data.loadCoffeeMenu();
+					updateMenu();
 					
 				} else if(input.equals("수정")) {
-					System.out.println("수정기능입니다.");
+					Output.subTitle("메뉴 수정");
+					System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");
+					System.out.print("수정하려는 메뉴 번호:");
+					String seq = in.nextLine();
+					
+					System.out.print("수정 메뉴이름:");
+					String menuName = in.nextLine();
+					
+					System.out.print("수정 가격:");
+					String menuPrice = in.nextLine();
+					
+					for(CoffeeMenu cm : Data.coffeeMenuList) {
+						
+						if(cm.getSeq().equals(seq)) {
+							
+							if(!menuName.equals("")) {
+								cm.setCoffeeName(menuName);
+							}
+							
+							if(!menuPrice.equals("") && !isString(menuPrice)) {
+								cm.setPrice(Integer.parseInt(menuPrice));
+							}
+							
+						}
+						
+					}
+					
+					System.out.println("수정이 완료되었습니다.");
+					updateMenu();
+					
 				} else if(input.equals("삭제")) {
-					System.out.println("삭제기능입니다.");
+					Output.subTitle("메뉴 삭제");
+					System.out.println("삭제를 하고 싶지 않으면 엔터를 입력해주세요");
+					
+					System.out.print("삭제하려는 메뉴 번호:");
+					String seq = in.nextLine();
+					
+					CoffeeMenu cf = null;
+					
+					for(CoffeeMenu cm : Data.coffeeMenuList) {
+						
+						if(cm.getSeq().equals(seq)) {
+							cf = cm;
+							break;
+						}
+						
+					}
+					
+					if(cf != null) {
+						System.out.printf("%s삭제되었습니다.\n", cf.getCoffeeName());
+						Data.coffeeMenuList.remove(cf);
+						updateMenu();
+						currentPage = 1;
+					} else {
+						System.out.println("삭제가 실패하였습니다.");
+					}
+					
+					
+					
 				} else {
 					Output.pause();
 				}
@@ -105,6 +161,12 @@ public class CoffeeMenuMain {
 			}
 			
 		}
+	}
+
+	private void updateMenu() {
+		Data.saveCoffeeMenu();
+		Data.coffeeMenuList.clear();
+		Data.loadCoffeeMenu();
 	}
 	
 	private boolean checkPrice(String price) {
