@@ -19,13 +19,15 @@ public class CoffeeMenuMain {
 			Output.title("메뉴 관리 시스템");
 			Output.bar();
 			
+			Output.subTitle("메뉴 현황");
+			// 페이징
 			int totalPage = Data.coffeeMenuList.size()/pageBlock + ((Data.coffeeMenuList.size()%pageBlock) > 0 ? 1 : 0); // 총 페이지		
 			
 			int currentBlock = currentPage-1;	// 현재 목록 번호
 			int startNum = currentBlock*pageBlock+1;
 			int endNum = currentBlock*pageBlock + pageBlock;
 			
-			Output.subTitle("메뉴 현황");
+			// 메뉴 조회
 			System.out.println("번호 | 메뉴 이름\t | 가격");
 			Output.bar();
 			Data.coffeeMenuList
@@ -48,103 +50,21 @@ public class CoffeeMenuMain {
 			String input = in.nextLine();
 					
 			// 메뉴 기능
-			if(isString(input)) {
+			if(Data.isString(input)) {
 				if(input.equals("추가")) {
-					Output.subTitle("메뉴 추가");
-					String seq = Data.coffeeMenuList.size() + 1 + "";
-					String name;
-					String price;
-					// 메뉴명
-					while(true) {
-						System.out.println("추가할 메뉴명을 입력해주세요");
-						System.out.print("메뉴명: ");
-						name = in.nextLine();
-						if(checkCoffeeName(name)) {
-							break;
-						} else {
-							System.out.println("메뉴명이 유효하지 않습니다.");
-							System.out.println("메뉴명을 다시 입력해주세요");
-						}
-					}
-					// 가격
-					while(true) {
-						System.out.println("메뉴의 가격을 입력해주세요");
-						System.out.print("가격: ");
-						price = in.nextLine();
-						if(checkPrice(price)) {
-							break;
-						} else {
-							System.out.println("가격이 유효하지 않습니다.");
-							System.out.println("가격을 다시 입력해주세요");
-						}
-					}
-					
-					CoffeeMenu cf = new CoffeeMenu(seq, name, Integer.parseInt(price));
-					
-					// 데이터 저장
-					Data.coffeeMenuList.add(cf);
-					updateMenu();
+					CoffeeMenuCRUD.createCoffeeMenu();
 					
 				} else if(input.equals("수정")) {
-					Output.subTitle("메뉴 수정");
-					System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");
-					System.out.print("수정하려는 메뉴 번호:");
-					String seq = in.nextLine();
 					
-					System.out.print("수정 메뉴이름:");
-					String menuName = in.nextLine();
-					
-					System.out.print("수정 가격:");
-					String menuPrice = in.nextLine();
-					
-					for(CoffeeMenu cm : Data.coffeeMenuList) {
-						
-						if(cm.getSeq().equals(seq)) {
-							
-							if(!menuName.equals("")) {
-								cm.setCoffeeName(menuName);
-							}
-							
-							if(!menuPrice.equals("") && !isString(menuPrice)) {
-								cm.setPrice(Integer.parseInt(menuPrice));
-							}
-							
-						}
-						
-					}
-					
-					System.out.println("수정이 완료되었습니다.");
-					updateMenu();
+					CoffeeMenuCRUD.updateCoffeeMenu();
 					
 				} else if(input.equals("삭제")) {
-					Output.subTitle("메뉴 삭제");
-					System.out.println("삭제를 하고 싶지 않으면 엔터를 입력해주세요");
-					
-					System.out.print("삭제하려는 메뉴 번호:");
-					String seq = in.nextLine();
-					
-					CoffeeMenu cf = null;
-					
-					for(CoffeeMenu cm : Data.coffeeMenuList) {
-						
-						if(cm.getSeq().equals(seq)) {
-							cf = cm;
-							break;
-						}
-						
-					}
-					
-					if(cf != null) {
-						System.out.printf("%s삭제되었습니다.\n", cf.getCoffeeName());
-						Data.coffeeMenuList.remove(cf);
-						updateMenu();
+								
+					boolean result = CoffeeMenuCRUD.deleteCoffeeMenu();
+					if(result) {
 						currentPage = 1;
-					} else {
-						System.out.println("삭제가 실패하였습니다.");
-					}
-					
-					
-					
+					} 
+				
 				} else {
 					Output.pause();
 				}
@@ -161,41 +81,7 @@ public class CoffeeMenuMain {
 			}
 			
 		}
-	}
-
-	private void updateMenu() {
-		Data.saveCoffeeMenu();
-		Data.coffeeMenuList.clear();
-		Data.loadCoffeeMenu();
-	}
+	} // managementCoffeeMenu
 	
-	private boolean checkPrice(String price) {
-			
-		if(isString(price)) return false; 
-		else {
-			int tmp = Integer.parseInt(price);
-			if(tmp <= 0) return false;
-		}		
-		return true;
-	}
-
-	private static boolean checkCoffeeName(String name) {
-		
-		boolean flag = Data.coffeeMenuList.stream().allMatch(c -> !c.getCoffeeName().equals(name));
-		
-		return flag;
-	}
 	
-	private static boolean isString(String t) { 
-		char[] ch = t.toCharArray();
-		boolean flag = false;
-		for(char c : ch) {
-			if(!Character.isDigit(c)) {
-				flag = true;
-				break;
-			}
-		}
-		return flag;
-	}
-	
-}
+} // CoffeeMenuMain
