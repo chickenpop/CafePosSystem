@@ -3,6 +3,7 @@ package cafepossystem;
 import java.util.Scanner;
 import cafepossystem.data.Data;
 import cafepossystem.management.menu.CoffeeMenuMain;
+import cafepossystem.management.menu.UserMain;
 
 public class Main {
 
@@ -31,7 +32,8 @@ public class Main {
 			} else if(input.equals("3")) {
 				System.out.println("매출 관리");
 			} else if(input.equals("4")) {
-				System.out.println("회원 관리");
+				UserMain um = new UserMain();
+				um.managementUser();
 			} else if(input.equals("0")) {
 				System.out.println("프로그램이 종료됩니다.");
 				in.close();
