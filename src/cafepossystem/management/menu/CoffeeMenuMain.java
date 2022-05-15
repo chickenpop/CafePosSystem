@@ -52,7 +52,7 @@ public class CoffeeMenuMain {
 			// 메뉴 기능
 			if(Data.isString(input)) {
 				if(input.equals("추가")) {
-					CoffeeMenuCRUD.createCoffeeMenu();
+					CoffeeMenuCRUD.addCoffeeMenu();
 					
 				} else if(input.equals("수정")) {
 					

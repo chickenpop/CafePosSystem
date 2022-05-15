@@ -9,7 +9,7 @@ public class CoffeeMenuCRUD {
 
 	private static Scanner in = new Scanner(System.in);
 	
-	public static void createCoffeeMenu() {
+	public static void addCoffeeMenu() {
 		
 		Output.subTitle("메뉴 추가");
 		String seq = Data.coffeeMenuList.size() + 1 + "";

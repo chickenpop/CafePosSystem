@@ -11,6 +11,7 @@ public class Main {
 
 		// 데이터 로드
 		Data.loadCoffeeMenu();
+		Data.loadUser();
 		
 		Scanner in = new Scanner(System.in);
 		
