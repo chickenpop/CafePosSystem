@@ -66,7 +66,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return String.format("User [seq=%s, name=%s, phoneNum=%s, address=%s, point=%s, coupon=%s]",
+		return String.format("회원정보 [seq=%s, name=%s, phoneNum=%s, address=%s, point=%s, coupon=%s]",
 				seq, name, phoneNum, address, point, coupon);
 	}
 }
