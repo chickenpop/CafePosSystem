@@ -44,7 +44,7 @@ public class CoffeeMenuCRUD {
 		
 		// 데이터 저장
 		Data.coffeeMenuList.add(cf);
-		updateMenu();
+		Data.updateMenu();
 		
 	}
 	
@@ -77,7 +77,7 @@ public class CoffeeMenuCRUD {
 		}
 		
 		System.out.println("수정이 완료되었습니다.");
-		updateMenu();
+		Data.updateMenu();
 	}
 	
 	public static boolean deleteCoffeeMenu() {
@@ -101,7 +101,7 @@ public class CoffeeMenuCRUD {
 		if(cf != null) {
 			System.out.printf("%s삭제되었습니다.\n", cf.getCoffeeName());
 			Data.coffeeMenuList.remove(cf);
-			updateMenu();
+			Data.updateMenu();
 			return true;
 		} else {
 			System.out.println("삭제가 실패하였습니다.");
@@ -110,11 +110,6 @@ public class CoffeeMenuCRUD {
 		
 	}
 	
-	private static void updateMenu() {
-		Data.saveCoffeeMenu();
-		Data.coffeeMenuList.clear();
-		Data.loadCoffeeMenu();
-	}
 	
 	private static boolean checkPrice(String price) {
 			
