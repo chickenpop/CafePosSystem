@@ -27,14 +27,15 @@ public class UserMain {
 			int startNum = currentBlock*pageBlock+1;
 			int endNum = currentBlock*pageBlock + pageBlock;
 			// 유저 데이터 출력
-			System.out.println("번호 | 이름 | 전화번호 | 보유 포인트 | 보유 쿠폰");
+			System.out.println("번호 | 이름 | 전화번호 | 주소 |보유 포인트 | 보유 쿠폰");
 			Data.userList.stream()
 							.filter(u -> (Integer.parseInt(u.getSeq()) <= endNum && Integer.parseInt(u.getSeq()) >= startNum))
 							.forEach(u -> 
-							System.out.printf("%s %s %s %s %s\n"
+							System.out.printf("%s %s %s %s %s %s\n"
 											, u.getSeq()
 											, u.getName()
 											, u.getPhoneNum()
+											, u.getAddress()
 											, u.getPoint()
 											, u.getCoupon()));
 			for(int i=1; i<=totalPage; i++) {
@@ -59,6 +60,8 @@ public class UserMain {
 					UserCRUD.addUser();
 					
 				} else if(input.equals("수정")) {
+					
+					UserCRUD.updateUser();
 					
 				} else if(input.equals("삭제")) {
 								
