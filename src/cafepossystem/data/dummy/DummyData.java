@@ -16,8 +16,8 @@ public class DummyData {
 
 		// 유저 데이터 생성용
 		try {
-			//createUserData();
-			createOrderHistory();
+			createUserData();
+			//createOrderHistory();
 		} catch (Exception e) {
 			System.out.println("DummyUserData.main");
 			e.printStackTrace();
@@ -31,7 +31,7 @@ public class DummyData {
 		
 		Random rnd = new Random();
 
-		String si_gu = "서울 특별시 강남구";
+		String si_gu = "서울 특별시 강남구 ";
 		
 		String[] dong = {"신사동", "압구정동", "청담동", "논현동", "대치동", "삼성동", "역삼동", "도곡동", "개포동", "일원동", "수서동", "자곡동", "세곡동", "율현동"};	
 		String[] firstName = { "김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "전", "홍"};

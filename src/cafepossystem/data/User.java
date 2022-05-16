@@ -4,18 +4,25 @@ public class User {
 
 	private String seq;
 	private String name;
+	private String address;
 	private String phoneNum;
 	private String point;
 	private String coupon;
-	
-	public User(String seq, String name, String phoneNum, String point, String coupon) {
+
+	public User(String seq, String name, String address, String phoneNum, String point,
+			String coupon) {
 		this.seq = seq;
 		this.name = name;
 		this.phoneNum = phoneNum;
+		this.address = address;
 		this.point = point;
 		this.coupon = coupon;
 	}
-
+	
+	public String getSeq() {
+		return seq;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -30,6 +37,14 @@ public class User {
 
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getPoint() {
@@ -48,14 +63,10 @@ public class User {
 		this.coupon = coupon;
 	}
 
-	public String getSeq() {
-		return seq;
-	}
-
+	
 	@Override
 	public String toString() {
-		return String.format("user [seq=%s, name=%s, phoneNum=%s, point=%s, coupon=%s]", seq, name,
-				phoneNum, point, coupon);
+		return String.format("User [seq=%s, name=%s, phoneNum=%s, address=%s, point=%s, coupon=%s]",
+				seq, name, phoneNum, address, point, coupon);
 	}
-	
 }

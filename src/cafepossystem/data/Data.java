@@ -58,6 +58,11 @@ public class Data {
 		
 	}
 	
+	public static void updateMenu() {
+		Data.saveCoffeeMenu();
+		Data.coffeeMenuList.clear();
+		Data.loadCoffeeMenu();
+	}
 	
 	public static void loadUser() {
 		
@@ -71,7 +76,7 @@ public class Data {
 				
 				String[] temp = line.split(",");
 				
-				User u = new User(temp[0], temp[1], temp[2], temp[3], temp[4]);
+				User u = new User(temp[0], temp[1], temp[2], temp[3], temp[4], temp[5]);
 				
 				userList.add(u);
 				
@@ -94,7 +99,13 @@ public class Data {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.userdata));
 			
 			for(User u : userList) {
-				String line = String.format("%s,%s,%s,%s,%s\n", u.getSeq(), u.getName(), u.getPhoneNum(), u.getPoint(), u.getCoupon());
+				String line = String.format("%s,%s,%s,%s,%s,%s\n"
+											, u.getSeq()
+											, u.getName()
+											, u.getAddress()
+											, u.getPhoneNum()
+											, u.getPoint()
+											, u.getCoupon());
 				writer.write(line);
 			}
 			
@@ -105,7 +116,12 @@ public class Data {
 		}
 		
 	}
-
+	
+	public static void updateUser() {
+		Data.saveUser();
+		Data.userList.clear();
+		Data.loadUser();
+	}
 	
 	
 	public static boolean isString(String t) { 
