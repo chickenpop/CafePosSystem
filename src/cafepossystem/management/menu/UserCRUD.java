@@ -48,62 +48,6 @@ public class UserCRUD {
 		
 	}
 
-	private static String checkPhoneNum(String phoneNum, boolean flag) {
-		while(flag) {
-			for(User u : Data.userList) {
-				if(u.getPhoneNum().equals(phoneNum) || phoneNum.length() != 11) {
-					System.out.println("잘못된 전화번호입니다");
-					System.out.println("!다시 입력해주세요!");
-					phoneNum = in.nextLine();
-					flag = true;
-					break;
-				} else {
-					flag = false;
-				}
-			}
-			
-		}
-		return phoneNum;
-	}
-
-	private static String checkAddress(String address, boolean flag) {
-		String[] dong = {"신사동", "압구정동", "청담동", "논현동", "대치동", "삼성동", "역삼동", "도곡동", "개포동", "일원동", "수서동", "자곡동", "세곡동", "율현동"};
-	
-		while(flag) {
-			for(String d : dong) {
-				if(address.contains(d)) {
-					address = "서울 특별시 강남구 " + address;
-					flag = false;
-					break;
-				}
-			}
-			if(flag) {
-				System.out.println("!다시 입력해주세요!");
-				address = in.nextLine();
-			}
-		}
-		return address;
-	}
-
-	private static String inputIsNumber(String check, int setting) {
-		if(check.equals("")) {
-			check = setting + "";
-		} 
-		if(Data.isString(check)) {
-			System.out.println("숫자만 입력할 수 있습니다");
-			check = checkRequirement(check);
-		}
-		return check;
-	}
-
-	private static String checkRequirement(String check) {
-		while(true) {
-			if(check.equals("")) System.out.println("!다시 입력해주세요!");
-			else break;
-			check = in.nextLine();
-		}
-		return check;
-	}
 
 	public static void updateUser() {
 
@@ -175,5 +119,70 @@ public class UserCRUD {
 		
 		
 	}
+	
+	public static void deleteUser() {
+
+		// TODO 삭제 (2022. 5. 16. 오후 2:01:54)
+		
+		
+	}
+
+	private static String checkPhoneNum(String phoneNum, boolean flag) {
+		while(flag) {
+			for(User u : Data.userList) {
+				if(u.getPhoneNum().equals(phoneNum) || phoneNum.length() != 11) {
+					System.out.println("잘못된 전화번호입니다");
+					System.out.println("!다시 입력해주세요!");
+					phoneNum = in.nextLine();
+					flag = true;
+					break;
+				} else {
+					flag = false;
+				}
+			}
+			
+		}
+		return phoneNum;
+	}
+	
+	private static String checkAddress(String address, boolean flag) {
+		String[] dong = {"신사동", "압구정동", "청담동", "논현동", "대치동", "삼성동", "역삼동", "도곡동", "개포동", "일원동", "수서동", "자곡동", "세곡동", "율현동"};
+		
+		while(flag) {
+			for(String d : dong) {
+				if(address.contains(d)) {
+					address = "서울 특별시 강남구 " + address;
+					flag = false;
+					break;
+				}
+			}
+			if(flag) {
+				System.out.println("!다시 입력해주세요!");
+				address = in.nextLine();
+			}
+		}
+		return address;
+	}
+	
+	private static String inputIsNumber(String check, int setting) {
+		if(check.equals("")) {
+			check = setting + "";
+		} 
+		if(Data.isString(check)) {
+			System.out.println("숫자만 입력할 수 있습니다");
+			check = checkRequirement(check);
+		}
+		return check;
+	}
+	
+	private static String checkRequirement(String check) {
+		while(true) {
+			if(check.equals("")) System.out.println("!다시 입력해주세요!");
+			else break;
+			check = in.nextLine();
+		}
+		return check;
+	}
+
 
 }
