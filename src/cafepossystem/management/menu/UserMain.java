@@ -65,8 +65,7 @@ public class UserMain {
 					
 				} else if(input.equals("삭제")) {
 								
-					UserCRUD.deleteUser();
-					boolean result = false;
+					boolean result = UserCRUD.deleteUser();
 					if(result) {
 						currentPage = 1;
 					} 
