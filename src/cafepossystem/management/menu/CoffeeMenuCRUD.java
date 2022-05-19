@@ -48,6 +48,7 @@ public class CoffeeMenuCRUD {
 		
 	}
 	
+	
 	public static void updateCoffeeMenu() {
 		Output.subTitle("메뉴 수정");
 		System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");

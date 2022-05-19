@@ -9,9 +9,10 @@ public class CoffeeMenuMain {
 
 	public void managementCoffeeMenu() {
 			
-		Scanner in = new Scanner(System.in);
 		int currentPage = 1; // 현재 페이지
 		int pageBlock = 5;  // 페이지 당 목록 수
+		Scanner in = new Scanner(System.in);
+		
 		while(true) {
 			
 			System.out.println();
@@ -48,7 +49,8 @@ public class CoffeeMenuMain {
 			System.out.println("페이지를 이동하려면 숫자를 입력해주세요");
 			System.out.print("이동 번호(기능) 선택:");
 			String input = in.nextLine();
-					
+		
+			
 			// 메뉴 기능
 			if(Data.isString(input)) {
 				if(input.equals("추가")) {

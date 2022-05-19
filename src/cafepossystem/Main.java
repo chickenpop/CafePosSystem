@@ -2,6 +2,7 @@ package cafepossystem;
 
 import java.util.Scanner;
 import cafepossystem.data.Data;
+import cafepossystem.management.menu.CafeOrderMain;
 import cafepossystem.management.menu.CoffeeMenuMain;
 import cafepossystem.management.menu.UserMain;
 
@@ -24,7 +25,10 @@ public class Main {
 			String input = in.nextLine();
 			
 			if(input.equals("1")) {
-				System.out.println("주문 관리");
+				
+				CafeOrderMain co = new CafeOrderMain();
+				co.managementCafeOrder();
+				
 			} else if(input.equals("2")) {
 				
 				CoffeeMenuMain cm = new CoffeeMenuMain();
