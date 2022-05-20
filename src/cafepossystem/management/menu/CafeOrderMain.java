@@ -81,10 +81,19 @@ public class CafeOrderMain {
 				System.out.println(menuPrice);
 				
 			}
+			
+			// 수량 선택
+			System.out.println("선택한 메뉴의 수량을 입력해주세요");
+			System.out.print("수량:");
+			String num = in.nextLine();
+			if(Data.isString(num)) {
+				Output.pause();
+			} else {
+				totalPrice = menuPrice * Integer.parseInt(num);
+			}
+			System.out.printf("현재 금액 : %d\n", totalPrice);
+			
 		}
-		// 주문 선택
-		
-		// 수량 선택
 		
 		// 최종 출력(가격이랑 수량 표시)
 		
