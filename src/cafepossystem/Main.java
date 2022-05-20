@@ -3,6 +3,7 @@ package cafepossystem;
 import java.util.Scanner;
 import cafepossystem.data.Data;
 import cafepossystem.management.menu.CafeOrderMain;
+import cafepossystem.management.menu.CafeRevenue;
 import cafepossystem.management.menu.CoffeeMenuMain;
 import cafepossystem.management.menu.UserMain;
 
@@ -35,7 +36,10 @@ public class Main {
 				cm.managementCoffeeMenu();
 				
 			} else if(input.equals("3")) {
-				System.out.println("매출 관리");
+				
+				CafeRevenue cr = new CafeRevenue();
+				cr.CafeRevenueMain();
+				
 			} else if(input.equals("4")) {
 				UserMain um = new UserMain();
 				um.managementUser();
