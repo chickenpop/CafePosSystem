@@ -1,5 +1,6 @@
 package cafepossystem.management.menu;
 
+
 import java.util.Scanner;
 import cafepossystem.Output;
 import cafepossystem.data.CoffeeMenu;
@@ -18,6 +19,8 @@ public class CafeOrderMain {
 		int totalPrice = 0; // 주문 합계 가격
 		int menuPrice = 0; // 선택된 메뉴 가격
 		
+
+		
 		while(true) {
 			
 			System.out.println();
@@ -26,11 +29,13 @@ public class CafeOrderMain {
 			Output.bar();
 			
 			Output.subTitle("메뉴 현황");
+			Output.bar();
 			// 페이징
 			int totalPage = Data.coffeeMenuList.size()/pageBlock + ((Data.coffeeMenuList.size()%pageBlock) > 0 ? 1 : 0); // 총 페이지		
 			int currentBlock = currentPage-1;	// 현재 목록 번호
 			int startNum = currentBlock*pageBlock+1;
 			int endNum = currentBlock*pageBlock + pageBlock;
+			
 			
 			// 메뉴 조회
 			System.out.println("번호 | 메뉴 이름\t | 가격");
@@ -69,7 +74,7 @@ public class CafeOrderMain {
 					}
 				}
 			} else { // 페이지 이동
-
+				
 				for(CoffeeMenu cf : Data.coffeeMenuList) {
 					
 					if(cf.getSeq().equals(input)) {
@@ -89,9 +94,15 @@ public class CafeOrderMain {
 			if(Data.isString(num)) {
 				Output.pause();
 			} else {
-				totalPrice = menuPrice * Integer.parseInt(num);
+				totalPrice += menuPrice * Integer.parseInt(num);
 			}
-			System.out.printf("현재 금액 : %d\n", totalPrice);
+			
+			// 현재 주문 내역 출력
+			
+			
+			System.out.printf("현재 총 금액 : %d\n", totalPrice);
+			
+			
 			
 		}
 		
