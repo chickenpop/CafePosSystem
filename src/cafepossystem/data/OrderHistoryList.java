@@ -2,33 +2,61 @@ package cafepossystem.data;
 
 public class OrderHistoryList {
 
-	private String OrderNum;
-	private String date;
-	private String adminName;
+	private int seq;
+	private String coffeeName;
+	private String coffeeNum;
+	private int price;
+	private String orderNum;
 	
-	public OrderHistoryList(String orderNum, String date, String adminName) {
+	public OrderHistoryList(int seq, String coffeeName, String coffeeNum, int price,
+			String orderNum) {
 		super();
-		OrderNum = orderNum;
-		this.date = date;
-		this.adminName = adminName;
+		this.seq = seq;
+		this.coffeeName = coffeeName;
+		this.coffeeNum = coffeeNum;
+		this.price = price;
+		this.orderNum = orderNum;
 	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
+	public String getCoffeeName() {
+		return coffeeName;
+	}
+
+	public void setCoffeeName(String coffeeName) {
+		this.coffeeName = coffeeName;
+	}
+
+	public String getCoffeeNum() {
+		return coffeeNum;
+	}
+
+	public void setCoffeeNum(String coffeeNum) {
+		this.coffeeNum = coffeeNum;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	public String getOrderNum() {
-		return OrderNum;
+		return orderNum;
 	}
+
 	public void setOrderNum(String orderNum) {
-		OrderNum = orderNum;
+		this.orderNum = orderNum;
 	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
-	public String getAdminName() {
-		return adminName;
-	}
-	public void setAdminName(String adminName) {
-		this.adminName = adminName;
-	}
+	
 	
 }
