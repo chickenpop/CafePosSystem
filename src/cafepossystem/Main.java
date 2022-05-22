@@ -2,6 +2,7 @@ package cafepossystem;
 
 import java.util.Scanner;
 import cafepossystem.data.Data;
+import cafepossystem.login.AdminLogin;
 import cafepossystem.management.menu.CafeOrderMain;
 import cafepossystem.management.menu.CafeRevenue;
 import cafepossystem.management.menu.CoffeeMenuMain;
@@ -16,6 +17,22 @@ public class Main {
 		Data.loadUser();
 		
 		Scanner in = new Scanner(System.in);
+		
+		// 첫화면
+		Output.logo();
+		Output.title("  카페 관리 시스템");
+		Output.bar();
+		Output.subTitle("로그인");
+		
+		
+		// 로그인 기능
+		AdminLogin al = new AdminLogin();
+		while(true) {
+			boolean flag = al.amdinLogin();
+			if(flag) {
+				break;
+			}
+		}		
 		
 		while(true) {
 			Output.logo();

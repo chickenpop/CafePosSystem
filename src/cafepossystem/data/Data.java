@@ -10,7 +10,7 @@ public class Data {
 
 	public static ArrayList<CoffeeMenu> coffeeMenuList = new ArrayList<CoffeeMenu>();
 	public static ArrayList<User> userList = new ArrayList<User>();
-	
+	public static Admin amdin;
 	
 	public static void loadCoffeeMenu() {
 		
@@ -112,6 +112,35 @@ public class Data {
 			writer.close();
 		} catch (Exception e) {
 			System.out.println("Data.saveUser");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void loginAdmin(String id, String pw) {
+		
+		try {
+
+			BufferedReader reader = new BufferedReader(new FileReader(DataPath.amdin));
+			
+			String line = null;
+			
+			while((line = reader.readLine()) != null) {
+				
+				String[] temp = line.split(",");
+				
+				if(temp[1].equals(id) && temp[3].equals(pw)) {
+					Admin ad = new Admin(temp[0], temp[1], temp[2], temp[3]);
+					Data.amdin = ad;
+					break;
+				}				
+				
+			}
+			
+			reader.close();
+			
+		} catch (Exception e) {
+			System.out.println("Data.loadUser");
 			e.printStackTrace();
 		}
 		
