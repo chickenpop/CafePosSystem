@@ -56,6 +56,7 @@ public class CafeOrderMain {
 			System.out.println();
 			Output.bar();
 			System.out.println("주문은 숫자 페이지이동은 p+숫자를 입력해주세요");
+			System.out.println("주문을 중간에 취소하려면 \"취소\"라고 입력해주세요");
 			System.out.print("이동 번호(기능) 선택:");
 			String input = in.nextLine();
 		
@@ -78,6 +79,12 @@ public class CafeOrderMain {
 						Output.pause();
 					}
 				}
+				
+				if(input.equals("취소")) {
+					orderList.clear();
+					totalPrice = 0;
+				}
+				
 			} else { 
 				
 				// 주문하기
@@ -115,13 +122,14 @@ public class CafeOrderMain {
 																		, o.getPrice()));
 				System.out.printf("현재 총 금액 : %d\n", totalPrice);
 				
+				// 최종 출력(가격이랑 수량 표시)
+				
+				// 주문 등록
+				
 			}
 			
 		}
-		
-		// 최종 출력(가격이랑 수량 표시)
-		
-		// 주문 등록
+	
 		
 		
 	}
