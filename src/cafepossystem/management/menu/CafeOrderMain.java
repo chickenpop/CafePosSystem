@@ -115,7 +115,7 @@ public class CafeOrderMain {
 						currentMenuPrice = pickCoffee.getPrice() * Integer.parseInt(num);
 					}
 					
-					OrderHistoryList ohl = new OrderHistoryList(orderList.size()+1, pickCoffee.getCoffeeName(), num, currentMenuPrice, "a");
+					OrderHistoryList ohl = new OrderHistoryList(orderList.size()+1, pickCoffee.getCoffeeName(), num, currentMenuPrice, Data.amdin.getStatus());
 					if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
 						orderList.add(ohl);					
 					}
