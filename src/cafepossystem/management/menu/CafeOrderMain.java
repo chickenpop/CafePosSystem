@@ -10,6 +10,10 @@ import cafepossystem.data.OrderHistoryList;
 
 public class CafeOrderMain {
 
+	private static int totalPrice = 0; 		// 주문 합계 가격
+	private static CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
+	private static int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
+
 	public void managementCafeOrder() {
 		
 		// 주문 메뉴 출력
@@ -17,9 +21,6 @@ public class CafeOrderMain {
 		int pageBlock = 5;  // 페이지 당 목록 수
 		Scanner in = new Scanner(System.in);
 		
-		int totalPrice = 0; 		// 주문 합계 가격
-		CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
-		int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
 		
 		// 주문 내역
 		ArrayList<OrderHistoryList> orderList = new ArrayList<OrderHistoryList>(10);
@@ -56,7 +57,8 @@ public class CafeOrderMain {
 			System.out.println();
 			Output.bar();
 			System.out.println("주문은 숫자 페이지이동은 p+숫자를 입력해주세요");
-			System.out.println("주문을 중간에 취소하려면 \"취소\"라고 입력해주세요");
+			System.out.println("주문을 중간에 취소하려면 \"취소\"를 입력해주세요");
+			System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요 ");
 			System.out.print("이동 번호(기능) 선택:");
 			String input = in.nextLine();
 		
@@ -85,9 +87,12 @@ public class CafeOrderMain {
 					totalPrice = 0;
 				}
 				
+				if(input.equals("확정")) {
+					
+				}
+				
 			} else { 
 				
-				// 주문하기
 				for(CoffeeMenu cf : Data.coffeeMenuList) {
 					
 					if(cf.getSeq().equals(input)) {
@@ -97,35 +102,35 @@ public class CafeOrderMain {
 					
 				}
 				
-				// 수량 선택
-				System.out.println("선택한 메뉴의 수량을 입력해주세요");
-				System.out.print("수량:");
-				String num = in.nextLine();
-				if(Data.isString(num)) {
-					Output.pause();
+				if(!pickCoffee.getSeq().equals("0")) {
+					// 수량 선택
+					System.out.println("선택한 메뉴의 수량을 입력해주세요");
+					System.out.print("수량:");
+					String num = in.nextLine();
+					if(Data.isString(num)) {
+						Output.pause();
+					} else {
+						totalPrice += pickCoffee.getPrice() * Integer.parseInt(num);
+						currentMenuPrice = pickCoffee.getPrice() * Integer.parseInt(num);
+					}
+					
+					OrderHistoryList ohl = new OrderHistoryList(orderList.size()+1, pickCoffee.getCoffeeName(), num, currentMenuPrice, "a");
+					if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
+						orderList.add(ohl);					
+					}
+					// 현재 주문 내역 출력
+					System.out.println("현재 주문 현황");
+					orderList.stream()
+								.forEach(o -> System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
+																			, o.getCoffeeName()
+																			, o.getCoffeeNum()
+																			, o.getPrice()/Integer.parseInt(o.getCoffeeNum())
+																			, o.getPrice()));
+					System.out.printf("현재 총 금액 : %d\n", totalPrice);
 				} else {
-					totalPrice += pickCoffee.getPrice() * Integer.parseInt(num);
-					currentMenuPrice = pickCoffee.getPrice() * Integer.parseInt(num);
+					System.out.println("잘못된 메뉴 선택입니다.");
+					Output.pause();
 				}
-				
-				OrderHistoryList ohl = new OrderHistoryList(orderList.size()+1, pickCoffee.getCoffeeName(), num, currentMenuPrice, "a");
-				if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
-					orderList.add(ohl);					
-				}
-				// 현재 주문 내역 출력
-				System.out.println("현재 주문 현황");
-				orderList.stream()
-							.forEach(o -> System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
-																		, o.getCoffeeName()
-																		, o.getCoffeeNum()
-																		, o.getPrice()/Integer.parseInt(o.getCoffeeNum())
-																		, o.getPrice()));
-				System.out.printf("현재 총 금액 : %d\n", totalPrice);
-				
-				// 최종 출력(가격이랑 수량 표시)
-				
-				// 주문 등록
-				
 			}
 			
 		}
@@ -133,5 +138,7 @@ public class CafeOrderMain {
 		
 		
 	}
+
+
 
 }
