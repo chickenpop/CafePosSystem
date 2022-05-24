@@ -146,6 +146,27 @@ public class Data {
 		
 	}
 	
+	public static void saveOrderHistoryList(ArrayList<OrderHistoryList> orderList) {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistoryList, true));
+			
+			for(OrderHistoryList p : orderList) {
+				String line = String.format("%s,%s,%s,%s,%s\n"
+											, p.getSeq()
+											, p.getCoffeeName()
+											, p.getCoffeeNum()
+											, p.getPrice()
+											, p.getOrderNum());
+				writer.write(line);
+			}
+			
+			writer.close();
+		} catch (Exception e) {
+			System.out.println("Data.saveUser");
+			e.printStackTrace();
+		}
+	}
+	
 	public static void updateUser() {
 		Data.saveUser();
 		Data.userList.clear();

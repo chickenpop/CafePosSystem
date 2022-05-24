@@ -10,8 +10,8 @@ public class DataPath {
 	
 	// 카페 정보
 	public final static String orderhistory = "C:\\class\\java\\CafePosSystem\\data\\orderhistory.txt";
+	public final static String orderhistoryList = "C:\\class\\java\\CafePosSystem\\data\\orderhistoryList.txt";
 	public final static String coffeemenu = "C:\\class\\java\\CafePosSystem\\data\\coffeemenu.txt";
-	
 	
 	
 }

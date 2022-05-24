@@ -21,7 +21,6 @@ public class CafeOrderMain {
 		int pageBlock = 5;  // 페이지 당 목록 수
 		Scanner in = new Scanner(System.in);
 		
-		
 		// 주문 내역
 		ArrayList<OrderHistoryList> orderList = new ArrayList<OrderHistoryList>(10);
 
@@ -88,6 +87,8 @@ public class CafeOrderMain {
 				}
 				
 				if(input.equals("확정")) {
+					
+					Data.saveOrderHistoryList(orderList);
 					
 				}
 				
