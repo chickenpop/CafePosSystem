@@ -167,6 +167,26 @@ public class Data {
 		}
 	}
 	
+	public static void saveOrderHistory(OrderHistory order) {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistory, true));
+			
+			
+			String line = String.format("%s,%tF,%sn"
+										, order.getOrderNum()
+										, order.getDate()
+										, order.getAdminName());
+											
+			writer.write(line);
+		
+			
+			writer.close();
+		} catch (Exception e) {
+			System.out.println("Data.saveUser");
+			e.printStackTrace();
+		}
+	}
+	
 	public static void updateUser() {
 		Data.saveUser();
 		Data.userList.clear();
