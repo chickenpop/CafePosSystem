@@ -22,7 +22,6 @@ public class Main {
 		Output.logo();
 		Output.title("  카페 관리 시스템");
 		Output.bar();
-		Output.subTitle("로그인");
 		
 		
 		// 로그인 기능

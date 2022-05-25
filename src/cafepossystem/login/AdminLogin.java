@@ -1,6 +1,7 @@
 package cafepossystem.login;
 
 import java.util.Scanner;
+import cafepossystem.Output;
 import cafepossystem.data.Data;
 
 public class AdminLogin {
@@ -9,11 +10,14 @@ public class AdminLogin {
 		
 		Scanner in = new Scanner(System.in);
 		
-		System.out.print("아이디:");
+		Output.title("\t   로그인");
+		Output.bar();
+		System.out.print("\t  아이디:");
 		String id = in.nextLine();
 		
-		System.out.print("비밀번호:");
+		System.out.print("\t  비밀번호:");
 		String pw = in.nextLine();
+		Output.bar();
 		
 		Data.loginAdmin(id, pw);
 		
