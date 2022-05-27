@@ -15,7 +15,7 @@ public class CafeOrderMain {
 	private static int totalPrice = 0; 		// 주문 합계 가격
 	private static CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
 	private static int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
-	private static int ordercnt = 1;
+	private static int ordercnt=1;
 	
 	public void managementCafeOrder() {
 		

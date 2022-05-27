@@ -145,6 +145,7 @@ public class Data {
 		}
 		
 	}
+
 	
 	public static void saveOrderHistoryList(ArrayList<OrderHistoryList> orderList) {
 		try {
@@ -162,7 +163,7 @@ public class Data {
 			
 			writer.close();
 		} catch (Exception e) {
-			System.out.println("Data.saveUser");
+			System.out.println("Data.saveOrderHistoryList");
 			e.printStackTrace();
 		}
 	}
@@ -172,7 +173,7 @@ public class Data {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistory, true));
 			
 			
-			String line = String.format("%s,%tF,%sn"
+			String line = String.format("%s,%tF,%s\n"
 										, order.getOrderNum()
 										, order.getDate()
 										, order.getAdminName());
