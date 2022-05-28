@@ -15,10 +15,33 @@ public class CafeOrderMain {
 	private static int totalPrice = 0; 		// 주문 합계 가격
 	private static CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
 	private static int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
-	private static int ordercnt=1;
+	private static int ordercnt;
+	private static int seq = Data.orderHistoryList.size()+1;
+
+	private int ordercnt() {
+		
+		Calendar c = Calendar.getInstance();
+		
+		String nowdate = String.format("%tF", c);
+		String temp = Data.orderHistoryList.get(Data.orderHistoryList.size()-1).getOrderNum();
+		String date = temp.substring(0, 10);
+		int cnt = 1;
+		
+		System.out.println(nowdate);
+		System.out.println(date);
+		
+		if(!nowdate.equals(date)) {
+			return cnt;
+		} else {
+			cnt = Integer.parseInt(temp.substring(12))+1;
+		}
+		
+		return cnt;
+	}
 	
 	public void managementCafeOrder() {
 		
+		ordercnt = ordercnt();
 		// 주문 메뉴 출력
 		int currentPage = 1; // 현재 페이지
 		int pageBlock = 5;  // 페이지 당 목록 수
@@ -91,14 +114,31 @@ public class CafeOrderMain {
 				
 				if(input.equals("확정")) {
 					
-					Data.saveOrderHistoryList(orderList);
 					// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
 					Calendar now = Calendar.getInstance();
-					String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
+					
+					String ordernum = String.format("%tF%s%03d", now,Data.amdin.getStatus(), ordercnt);
+					OrderHistory order = new OrderHistory(ordernum,String.format("%tT", now),Data.amdin.getStatus());
+					
+					Data.orderHistory.add(order);
+					for(OrderHistoryList ohl : orderList) {
+						Data.orderHistoryList.add(ohl);
+					}
 					ordercnt++;
-					OrderHistory order = new OrderHistory(ordernum,now,Data.amdin.getStatus());
-					Data.saveOrderHistory(order);
+					orderList.clear();
+					
+					Data.saveOrderHistoryList();
+					Data.saveOrderHistory();
+					Data.loadOrderHistory();
+					Data.loadOrderHistoryList();
+					
+					
+					System.out.println("최종 영수증 출력");
+					
+					totalPrice = 0;
+					
 				}
+	
 				
 			} else { 
 				
@@ -125,8 +165,9 @@ public class CafeOrderMain {
 					
 					// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
 					Calendar now = Calendar.getInstance();
-					String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
-					OrderHistoryList ohl = new OrderHistoryList(orderList.size()+1, pickCoffee.getCoffeeName(), num, currentMenuPrice, ordernum);
+					String ordernum = String.format("%tF%s%03d", now,Data.amdin.getStatus(), ordercnt);
+
+					OrderHistoryList ohl = new OrderHistoryList(seq++, pickCoffee.getCoffeeName(), num, currentMenuPrice, ordernum);
 					if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
 						orderList.add(ohl);					
 					}
