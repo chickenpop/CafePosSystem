@@ -4,7 +4,7 @@ import java.util.Scanner;
 import cafepossystem.data.Data;
 import cafepossystem.login.AdminLogin;
 import cafepossystem.management.menu.CafeOrderMain;
-import cafepossystem.management.menu.CafeRevenue;
+import cafepossystem.management.menu.CafeRevenueMain;
 import cafepossystem.management.menu.CoffeeMenuMain;
 import cafepossystem.management.menu.UserMain;
 
@@ -55,8 +55,8 @@ public class Main {
 				
 			} else if(input.equals("3")) {
 				
-				CafeRevenue cr = new CafeRevenue();
-				cr.CafeRevenueMain();
+				CafeRevenueMain cr = new CafeRevenueMain();
+				cr.CafeRevenue();
 				
 			} else if(input.equals("4")) {
 				UserMain um = new UserMain();

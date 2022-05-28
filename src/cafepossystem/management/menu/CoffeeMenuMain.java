@@ -17,7 +17,7 @@ public class CoffeeMenuMain {
 			
 			System.out.println();
 			System.out.println();
-			Output.title("메뉴 관리 시스템");
+			Output.title("메뉴 관리");
 			Output.bar();
 			
 			Output.subTitle("메뉴 현황");
