@@ -10,6 +10,8 @@ public class Data {
 
 	public static ArrayList<CoffeeMenu> coffeeMenuList = new ArrayList<CoffeeMenu>();
 	public static ArrayList<User> userList = new ArrayList<User>();
+	public static ArrayList<OrderHistory> orderHistory = new ArrayList<OrderHistory>();
+	public static ArrayList<OrderHistoryList> orderHistoryList = new ArrayList<OrderHistoryList>();
 	public static Admin amdin;
 	
 	public static void loadCoffeeMenu() {
@@ -145,13 +147,38 @@ public class Data {
 		}
 		
 	}
-
-	
-	public static void saveOrderHistoryList(ArrayList<OrderHistoryList> orderList) {
+	 
+	public static void loadOrderHistory() {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistoryList, true));
+			BufferedReader reader = new BufferedReader(new FileReader(DataPath.orderhistory));
 			
-			for(OrderHistoryList p : orderList) {
+			String line = null;
+			
+			orderHistory.clear();
+			
+			while((line = reader.readLine()) != null) {
+				
+				String[] temp = line.split(",");
+
+				
+				OrderHistory o = new OrderHistory(temp[0], temp[1], temp[2]);
+				
+				orderHistory.add(o);
+				
+			}
+			
+			reader.close();
+		} catch (Exception e) {
+			System.out.println("Data.loadOrderHist");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void saveOrderHistoryList() {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistoryList));
+			
+			for(OrderHistoryList p : orderHistoryList) {
 				String line = String.format("%s,%s,%s,%s,%s\n"
 											, p.getSeq()
 											, p.getCoffeeName()
@@ -168,17 +195,45 @@ public class Data {
 		}
 	}
 	
-	public static void saveOrderHistory(OrderHistory order) {
+	public static void loadOrderHistoryList() {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistory, true));
+			BufferedReader reader = new BufferedReader(new FileReader(DataPath.orderhistoryList));
 			
+			String line = null;
 			
-			String line = String.format("%s,%tF,%s\n"
-										, order.getOrderNum()
-										, order.getDate()
-										, order.getAdminName());
-											
-			writer.write(line);
+			orderHistoryList.clear();
+			
+			while((line = reader.readLine()) != null) {
+				
+				String[] temp = line.split(",");
+
+				
+				OrderHistoryList ohl = new OrderHistoryList(Integer.parseInt(temp[0]), temp[1], temp[2], Integer.parseInt(temp[3]), temp[4]);
+				
+				orderHistoryList.add(ohl);
+				
+			}
+			
+			reader.close();
+		} catch (Exception e) {
+			System.out.println("Data.saveOrderHistory");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void saveOrderHistory() {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.orderhistory));
+			
+			for(OrderHistory o : orderHistory) {
+				String line = String.format("%s,%s,%s\n"
+											, o.getOrderNum()
+											, o.getDate()
+											, o.getAdminName());
+				writer.write(line);
+			}
+			
+			writer.close();
 		
 			
 			writer.close();

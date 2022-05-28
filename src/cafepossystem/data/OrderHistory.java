@@ -1,17 +1,15 @@
 package cafepossystem.data;
 
-import java.util.Calendar;
-
 public class OrderHistory {
 
 	private String OrderNum;
-	private Calendar date;
+	private String dateTime;
 	private String adminName;
 	
-	public OrderHistory(String orderNum, Calendar date, String adminName) {
+	public OrderHistory(String orderNum, String dateTime, String adminName) {
 		super();
 		OrderNum = orderNum;
-		this.date = date;
+		this.dateTime = dateTime;
 		this.adminName = adminName;
 	}
 	public String getOrderNum() {
@@ -20,11 +18,11 @@ public class OrderHistory {
 	public void setOrderNum(String orderNum) {
 		OrderNum = orderNum;
 	}
-	public Calendar getDate() {
-		return date;
+	public String getDate() {
+		return dateTime;
 	}
-	public void setDate(Calendar date) {
-		this.date = date;
+	public void setDate(String dateTime) {
+		this.dateTime = dateTime;
 	}
 	public String getAdminName() {
 		return adminName;
