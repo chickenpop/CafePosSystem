@@ -51,6 +51,12 @@ public class Output {
 		String input = in.nextLine();
 	}
 	
+	public static void Waiting() {
+		Scanner in = new Scanner(System.in);
+		System.out.println("다음 단계로 넘어가려면 엔터를 입력해주세요.");
+		String input = in.nextLine();
+	}
+	
 	public static void bar() {
 		System.out.println("===============================================");
 	}

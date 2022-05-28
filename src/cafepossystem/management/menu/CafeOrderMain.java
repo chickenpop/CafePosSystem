@@ -133,8 +133,21 @@ public class CafeOrderMain {
 					Data.loadOrderHistoryList();
 					
 					
+					Output.bar();
 					System.out.println("최종 영수증 출력");
-					
+					Output.bar();
+					for(OrderHistoryList ohl : Data.orderHistoryList) {
+						if(Data.orderHistory.get(Data.orderHistory.size()-1).getOrderNum().equals(ohl.getOrderNum())){
+							 System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
+										, ohl.getCoffeeName()
+										, ohl.getCoffeeNum()
+										, ohl.getPrice()/Integer.parseInt(ohl.getCoffeeNum())
+										, ohl.getPrice());
+						}
+					}
+					Output.bar();
+					System.out.printf("총 금액: %d원\n", totalPrice);
+					Output.Waiting();
 					totalPrice = 0;
 					
 				}
