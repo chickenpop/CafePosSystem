@@ -17,27 +17,7 @@ public class CafeOrderMain {
 	private static int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
 	private static int ordercnt;
 	private static int seq = Data.orderHistoryList.size()+1;
-
-	private int ordercnt() {
-		
-		Calendar c = Calendar.getInstance();
-		
-		String nowdate = String.format("%tF", c);
-		String temp = Data.orderHistoryList.get(Data.orderHistoryList.size()-1).getOrderNum();
-		String date = temp.substring(0, 10);
-		int cnt = 1;
-		
-		System.out.println(nowdate);
-		System.out.println(date);
-		
-		if(!nowdate.equals(date)) {
-			return cnt;
-		} else {
-			cnt = Integer.parseInt(temp.substring(12))+1;
-		}
-		
-		return cnt;
-	}
+	private static Calendar now = Calendar.getInstance();
 	
 	public void managementCafeOrder() {
 		
@@ -83,7 +63,6 @@ public class CafeOrderMain {
 			Output.bar();
 			System.out.println("주문은 숫자 페이지이동은 p+숫자를 입력해주세요");
 			System.out.println("주문을 중간에 취소하려면 \"취소\"를 입력해주세요");
-			System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요 ");
 			System.out.print("이동 번호(기능) 선택:");
 			String input = in.nextLine();
 		
@@ -111,46 +90,6 @@ public class CafeOrderMain {
 					orderList.clear();
 					totalPrice = 0;
 				}
-				
-				if(input.equals("확정")) {
-					
-					// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
-					Calendar now = Calendar.getInstance();
-					
-					String ordernum = String.format("%tF%s%03d", now,Data.amdin.getStatus(), ordercnt);
-					OrderHistory order = new OrderHistory(ordernum,String.format("%tT", now),Data.amdin.getStatus());
-					
-					Data.orderHistory.add(order);
-					for(OrderHistoryList ohl : orderList) {
-						Data.orderHistoryList.add(ohl);
-					}
-					ordercnt++;
-					orderList.clear();
-					
-					Data.saveOrderHistoryList();
-					Data.saveOrderHistory();
-					Data.loadOrderHistory();
-					Data.loadOrderHistoryList();
-					
-					
-					Output.bar();
-					System.out.println("최종 영수증 출력");
-					Output.bar();
-					for(OrderHistoryList ohl : Data.orderHistoryList) {
-						if(Data.orderHistory.get(Data.orderHistory.size()-1).getOrderNum().equals(ohl.getOrderNum())){
-							 System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
-										, ohl.getCoffeeName()
-										, ohl.getCoffeeNum()
-										, ohl.getPrice()/Integer.parseInt(ohl.getCoffeeNum())
-										, ohl.getPrice());
-						}
-					}
-					Output.bar();
-					System.out.printf("총 금액: %d원\n", totalPrice);
-					Output.Waiting();
-					totalPrice = 0;
-					
-				}
 	
 				
 			} else { 
@@ -166,25 +105,26 @@ public class CafeOrderMain {
 				
 				if(!pickCoffee.getSeq().equals("0")) {
 					// 수량 선택
-					System.out.println("선택한 메뉴의 수량을 입력해주세요");
-					System.out.print("수량:");
-					String num = in.nextLine();
-					if(Data.isString(num)) {
-						Output.pause();
-					} else {
-						totalPrice += pickCoffee.getPrice() * Integer.parseInt(num);
-						currentMenuPrice = pickCoffee.getPrice() * Integer.parseInt(num);
+					boolean flag = true;
+					String num = null;
+					while(flag) {
+						System.out.println("선택한 메뉴의 수량을 입력해주세요");
+						System.out.print("수량:");
+						num = in.nextLine();
+						flag = pickCoffeeMenuCnt(num);
 					}
 					
 					// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
-					Calendar now = Calendar.getInstance();
-					String ordernum = String.format("%tF%s%03d", now,Data.amdin.getStatus(), ordercnt);
+					now = Calendar.getInstance();
+					String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
 
 					OrderHistoryList ohl = new OrderHistoryList(seq++, pickCoffee.getCoffeeName(), num, currentMenuPrice, ordernum);
 					if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
 						orderList.add(ohl);					
 					}
+					
 					// 현재 주문 내역 출력
+					Output.bar();
 					System.out.println("현재 주문 현황");
 					orderList.stream()
 								.forEach(o -> System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
@@ -193,6 +133,16 @@ public class CafeOrderMain {
 																			, o.getPrice()/Integer.parseInt(o.getCoffeeNum())
 																			, o.getPrice()));
 					System.out.printf("현재 총 금액 : %d\n", totalPrice);
+					System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요(아니라면 엔터를 입력해주세요");
+					input = in.nextLine();
+					if(input.equals("확정")) {
+						
+						order(orderList);
+						
+					} else {
+						System.out.println("메뉴현황으로 이동합니다.");
+					}
+					Output.bar();
 				} else {
 					System.out.println("잘못된 메뉴 선택입니다.");
 					Output.pause();
@@ -202,7 +152,79 @@ public class CafeOrderMain {
 		}
 	
 		
+	}
+
+	private void order(ArrayList<OrderHistoryList> orderList) {
+		// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
+		now = Calendar.getInstance();
 		
+		String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
+		OrderHistory order = new OrderHistory(ordernum,String.format("%tT", now),Data.amdin.getStatus());
+		
+		Data.orderHistory.add(order);
+		for(OrderHistoryList ohl : orderList) {
+			Data.orderHistoryList.add(ohl);
+		}
+		ordercnt++;
+		orderList.clear();
+		
+		Data.saveOrderHistoryList();
+		Data.saveOrderHistory();
+		Data.loadOrderHistory();
+		Data.loadOrderHistoryList();
+		
+		
+		Output.bar();
+		System.out.println("최종 영수증 출력");
+		Output.bar();
+		for(OrderHistoryList ohl : Data.orderHistoryList) {
+			if(Data.orderHistory.get(Data.orderHistory.size()-1).getOrderNum().equals(ohl.getOrderNum())){
+				 System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
+							, ohl.getCoffeeName()
+							, ohl.getCoffeeNum()
+							, ohl.getPrice()/Integer.parseInt(ohl.getCoffeeNum())
+							, ohl.getPrice());
+			}
+		}
+		Output.bar();
+		System.out.printf("총 금액: %d원\n", totalPrice);
+		Output.Waiting();
+		totalPrice = 0;
+	}
+
+	private int ordercnt() {
+		
+		now = Calendar.getInstance();
+		
+		String nowdate = String.format("%tF", now);
+		String temp = Data.orderHistoryList.get(Data.orderHistoryList.size()-1).getOrderNum();
+		String date = temp.substring(0, 10);
+		int cnt = 1;
+		
+		System.out.println(nowdate);
+		System.out.println(date);
+		
+		if(!nowdate.equals(date)) {
+			return cnt;
+		} else {
+			cnt = Integer.parseInt(temp.substring(12))+1;
+		}
+		
+		return cnt;
+	}
+	
+	private boolean pickCoffeeMenuCnt(String num) {
+		if(Data.isString(num)) {
+			Output.pause();
+			return true;
+		} else if (Integer.parseInt(num) == 0) {
+			Output.pause();
+			return true;
+		} else {
+			totalPrice += pickCoffee.getPrice() * Integer.parseInt(num);
+			currentMenuPrice = pickCoffee.getPrice() * Integer.parseInt(num);
+			return false;
+		}
 	}
 
 
