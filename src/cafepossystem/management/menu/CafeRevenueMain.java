@@ -2,6 +2,7 @@ package cafepossystem.management.menu;
 
 import java.util.Scanner;
 import cafepossystem.Output;
+import cafepossystem.data.Data;
 
 public class CafeRevenueMain {
 
@@ -26,18 +27,11 @@ public class CafeRevenueMain {
 			if(input.equals("0")) {
 				System.out.println("이전으로 돌아갑니다.");
 				break;
-			} else if (input.equals("1")) {
-				Output.subTitle("연매출");
-				CafeRevenueCRUD cr = new CafeRevenueCRUD();
-				cr.readAnnualSales();
-			} else if (input.equals("2")) {
-				Output.subTitle("월매출");
-				CafeRevenueCRUD cr = new CafeRevenueCRUD();
-				cr.readMonthSales();
-			} else if (input.equals("3")) {
-				Output.subTitle("일매출");
-				CafeRevenueCRUD cr = new CafeRevenueCRUD();
-				cr.readDaySales();
+			} else if (!Data.isString(input)) {
+				CafeRevenueCRUD crc = new CafeRevenueCRUD();
+				crc.readSales(input);
+			} else {
+				Output.pause();
 			}
 			
 		}
