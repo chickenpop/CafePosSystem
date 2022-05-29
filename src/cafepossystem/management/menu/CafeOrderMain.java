@@ -201,9 +201,6 @@ public class CafeOrderMain {
 		String date = temp.substring(0, 10);
 		int cnt = 1;
 		
-		System.out.println(nowdate);
-		System.out.println(date);
-		
 		if(!nowdate.equals(date)) {
 			return cnt;
 		} else {
