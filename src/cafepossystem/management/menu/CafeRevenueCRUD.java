@@ -2,6 +2,7 @@ package cafepossystem.management.menu;
 
 import java.util.Calendar;
 import cafepossystem.Output;
+import cafepossystem.data.CoffeeMenu;
 import cafepossystem.data.Data;
 import cafepossystem.data.OrderHistoryList;
 
@@ -9,10 +10,16 @@ public class CafeRevenueCRUD {
 
 	private Calendar now;
 	private int totalPrice;
+	private int[] menuCnt;
+	private int[] priceCnt;
 	
 	public CafeRevenueCRUD() {
+		
 		this.now = Calendar.getInstance();
 		this.totalPrice = 0;
+		this.menuCnt = new int[Data.coffeeMenuList.size()];
+		this.priceCnt = new int[Data.coffeeMenuList.size()];
+		
 	}
 	
 	public void readSales(String input) {
@@ -25,7 +32,7 @@ public class CafeRevenueCRUD {
 			Output.subTitle("연매출");
 			Output.bar();
 			AnnualSales();
-			
+			ReadSalesRate();
 		} else if(input.equals("2")) {
 			Output.subTitle("월매출");
 			Output.bar();
@@ -48,11 +55,41 @@ public class CafeRevenueCRUD {
 		}
 	}
 	
+	public void ReadSalesRate() {
+		
+		System.out.println("판매수량");
+		for(CoffeeMenu cm : Data.coffeeMenuList) {
+			
+			System.out.printf("%s %s %d\n"
+					, cm.getCoffeeName()
+					, this.menuCnt[Integer.parseInt(cm.getSeq())-1]
+				    , this.priceCnt[Integer.parseInt(cm.getSeq())-1]);
+			
+		}
+		
+	}
+	
+	public void countSalesRate(String coffeeMenuName, String coffeeMenuCnt, int coffeePrice) {
+		
+		for(CoffeeMenu cm : Data.coffeeMenuList) {
+			
+			if(coffeeMenuName.equals(cm.getCoffeeName())) {
+				
+				this.menuCnt[Integer.parseInt(cm.getSeq())-1] += Integer.parseInt(coffeeMenuCnt);
+				this.priceCnt[Integer.parseInt(cm.getSeq())-1] += coffeePrice;
+				break;
+			}
+			
+		}
+		
+	}
+	
 	public void AnnualSales() {
 		
 		for(OrderHistoryList ohl : Data.orderHistoryList) {
 			if(String.format("%04d", now.get(Calendar.YEAR)).equals(ohl.getOrderNum().substring(0, 4))) {
 				totalPrice += ohl.getPrice();
+				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
 			}
 		}
 	
