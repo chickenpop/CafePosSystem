@@ -37,10 +37,12 @@ public class CafeRevenueCRUD {
 			Output.subTitle("월매출");
 			Output.bar();
 			MonthSales();
+			ReadSalesRate();
 		} else if(input.equals("3")) {
 			Output.subTitle("일매출");
 			Output.bar();
 			DaySales();
+			ReadSalesRate();
 		} else {
 			Output.pause();
 			return;
@@ -58,12 +60,15 @@ public class CafeRevenueCRUD {
 	public void ReadSalesRate() {
 		
 		System.out.println("판매수량");
+		Output.bar();
+		System.out.println("수량\t|\t판매액 |\t메뉴명");
+		Output.bar();
 		for(CoffeeMenu cm : Data.coffeeMenuList) {
 			
-			System.out.printf("%s %s %d\n"
-					, cm.getCoffeeName()
+			System.out.printf("%8d|%12d원|%-8s\n"
 					, this.menuCnt[Integer.parseInt(cm.getSeq())-1]
-				    , this.priceCnt[Integer.parseInt(cm.getSeq())-1]);
+					, this.priceCnt[Integer.parseInt(cm.getSeq())-1]
+				    , cm.getCoffeeName());
 			
 		}
 		
@@ -100,6 +105,7 @@ public class CafeRevenueCRUD {
 		for(OrderHistoryList ohl : Data.orderHistoryList) {
 			if(String.format("%02d", now.get(Calendar.MONTH)+1).equals(ohl.getOrderNum().substring(5, 7))) {
 				totalPrice += ohl.getPrice();
+				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
 			}
 		}
 	}
@@ -109,6 +115,7 @@ public class CafeRevenueCRUD {
 		for(OrderHistoryList ohl : Data.orderHistoryList) {
 			if(String.format("%tF", now).equals(ohl.getOrderNum().substring(0, 10))) {
 				totalPrice += ohl.getPrice();
+				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
 			}
 		}
 	}
