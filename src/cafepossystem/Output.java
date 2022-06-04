@@ -35,8 +35,8 @@ public class Output {
 		System.out.print("\t|2. 메뉴 관리 |");
 		System.out.println("\t|3. 매출 관리 |");
 		System.out.print("|4. 회원 관리 |");
-		System.out.print("\t|0. 종료      |");
-		System.out.println("\t|             |");
+		System.out.print("\t|5. 로그 아웃 |");
+		System.out.print("\t|0. 종료      |\n");
 		bar();
 	}
 	

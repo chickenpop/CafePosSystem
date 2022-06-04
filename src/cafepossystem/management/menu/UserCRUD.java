@@ -166,7 +166,7 @@ public class UserCRUD {
 		
 	}
 
-	private static String checkPhoneNum(String phoneNum, boolean flag) {
+	public static String checkPhoneNum(String phoneNum, boolean flag) {
 		while(flag) {
 			for(User u : Data.userList) {
 				if(u.getPhoneNum().equals(phoneNum) || phoneNum.length() != 11) {
@@ -183,8 +183,9 @@ public class UserCRUD {
 		}
 		return phoneNum;
 	}
+
 	
-	private static String checkAddress(String address, boolean flag) {
+	public static String checkAddress(String address, boolean flag) {
 		String[] dong = {"신사동", "압구정동", "청담동", "논현동", "대치동", "삼성동", "역삼동", "도곡동", "개포동", "일원동", "수서동", "자곡동", "세곡동", "율현동"};
 		
 		while(flag) {
@@ -203,7 +204,7 @@ public class UserCRUD {
 		return address;
 	}
 	
-	private static String inputIsNumber(String check, int setting) {
+	public static String inputIsNumber(String check, int setting) {
 		if(check.equals("")) {
 			check = setting + "";
 		} 

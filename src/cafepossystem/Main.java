@@ -28,14 +28,17 @@ public class Main {
 		
 		// 로그인 기능
 		AdminLogin al = new AdminLogin();
-		while(true) {
-			boolean flag = al.amdinLogin();
-			if(flag) {
-				break;
-			}
-		}		
+		boolean flag = true;		
 		
 		while(true) {
+			
+			while(flag) {
+				flag = al.amdinLogin();
+				if(!flag) {
+					break;
+				}
+			}
+			
 			Output.logo();
 			Output.title("  카페 관리 시스템");
 			Output.menu();
@@ -61,6 +64,10 @@ public class Main {
 			} else if(input.equals("4")) {
 				UserMain um = new UserMain();
 				um.managementUser();
+			} else if(input.equals("5")) {
+				
+				flag = al.adminLogout();
+				
 			} else if(input.equals("0")) {
 				System.out.println("프로그램이 종료됩니다.");
 				in.close();

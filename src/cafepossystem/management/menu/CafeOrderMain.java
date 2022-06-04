@@ -9,15 +9,18 @@ import cafepossystem.data.CoffeeMenu;
 import cafepossystem.data.Data;
 import cafepossystem.data.OrderHistory;
 import cafepossystem.data.OrderHistoryList;
+import cafepossystem.data.User;
 
 public class CafeOrderMain {
 
-	private static int totalPrice = 0; 		// 주문 합계 가격
-	private static CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
-	private static int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
-	private static int ordercnt;
-	private static int seq = Data.orderHistoryList.size()+1;
-	private static Calendar now = Calendar.getInstance();
+	private int totalPrice = 0; 		// 주문 합계 가격
+	private int totalMenuCnt = 0;
+	private CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
+	private int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
+	private int ordercnt;
+	private int seq = Data.orderHistoryList.size()+1;
+	private Calendar now = Calendar.getInstance();
+	private Scanner in = new Scanner(System.in);
 	
 	public void managementCafeOrder() {
 		
@@ -25,7 +28,6 @@ public class CafeOrderMain {
 		// 주문 메뉴 출력
 		int currentPage = 1; // 현재 페이지
 		int pageBlock = 5;  // 페이지 당 목록 수
-		Scanner in = new Scanner(System.in);
 		
 		// 주문 내역
 		ArrayList<OrderHistoryList> orderList = new ArrayList<OrderHistoryList>(10);
@@ -114,7 +116,6 @@ public class CafeOrderMain {
 						flag = pickCoffeeMenuCnt(num);
 					}
 					
-					// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
 					now = Calendar.getInstance();
 					String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
 
@@ -137,7 +138,9 @@ public class CafeOrderMain {
 					input = in.nextLine();
 					if(input.equals("확정")) {
 						
+						useCoupon();
 						order(orderList);
+						orderUser(totalMenuCnt);
 						
 					} else {
 						System.out.println("메뉴현황으로 이동합니다.");
@@ -154,8 +157,50 @@ public class CafeOrderMain {
 		
 	}
 
+	private void useCoupon() {
+
+		System.out.print("포인트 적립 혹은 쿠폰을 사용하시겠습니까?");
+		
+		
+	}
+
+	private void orderUser(int totalMenuCnt) {
+
+		System.out.println("적립하시겠습니까?(y/n)");
+		String input = in.nextLine();
+		if(input.toLowerCase().equals("y")) {
+			System.out.println("회원의 전화번호를 입력해주세요");
+			input = in.nextLine();
+			
+			input = input.replace(" ", ""); // 공백제거
+			
+			for(User u : Data.userList) {
+				if(u.getPhoneNum().equals(input)) {
+					
+					System.out.printf("%s의 회원이 적립됩니다.\n", u.getName());
+					
+					totalMenuCnt += Integer.parseInt(u.getPoint());
+					if(totalMenuCnt >= 10) {
+						int temp = Integer.parseInt(u.getCoupon());
+						u.setCoupon(String.format("%s", (temp+totalMenuCnt/10)));
+						u.setPoint(String.format("%s", (totalMenuCnt%10)));
+					} else {
+						u.setPoint(String.format("%s", totalMenuCnt));
+					}
+					break;
+				}
+			}
+			
+			Data.saveUser();
+			Data.loadUser();
+			
+		} else {
+			return;
+		}
+		
+	}
+
 	private void order(ArrayList<OrderHistoryList> orderList) {
-		// TODO 중복코드 (2022. 5. 25. 오후 10:56:12)
 		now = Calendar.getInstance();
 		
 		String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
@@ -184,6 +229,7 @@ public class CafeOrderMain {
 							, ohl.getCoffeeNum()
 							, ohl.getPrice()/Integer.parseInt(ohl.getCoffeeNum())
 							, ohl.getPrice());
+				 totalMenuCnt += Integer.parseInt(ohl.getCoffeeNum());
 			}
 		}
 		Output.bar();

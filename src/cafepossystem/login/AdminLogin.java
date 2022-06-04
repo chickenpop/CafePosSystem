@@ -23,11 +23,16 @@ public class AdminLogin {
 		
 		if(Data.amdin != null) {
 			System.out.println("로그인에 성공했습니다");
-			return true;
+			return false;
 		}else {
 			System.out.println("로그인에 실패했습니다");
-			return false;
+			return true;
 		}
+	}
+
+	public boolean adminLogout() {
+		Data.amdin = null;
+		return true;
 	}
 	
 }

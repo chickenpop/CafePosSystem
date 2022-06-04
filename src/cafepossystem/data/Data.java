@@ -73,6 +73,8 @@ public class Data {
 			BufferedReader reader = new BufferedReader(new FileReader(DataPath.userdata));
 			
 			String line = null;
+
+			userList.clear();
 			
 			while((line = reader.readLine()) != null) {
 				
