@@ -7,6 +7,7 @@ import java.util.Scanner;
 import cafepossystem.Output;
 import cafepossystem.data.CoffeeMenu;
 import cafepossystem.data.Data;
+import cafepossystem.data.Discount;
 import cafepossystem.data.OrderHistory;
 import cafepossystem.data.OrderHistoryList;
 import cafepossystem.data.User;
@@ -21,6 +22,7 @@ public class CafeOrderMain {
 	private int seq = Data.orderHistoryList.size()+1;
 	private Calendar now = Calendar.getInstance();
 	private Scanner in = new Scanner(System.in);
+	private int discount = 0;
 	
 	public void managementCafeOrder() {
 		
@@ -138,9 +140,9 @@ public class CafeOrderMain {
 					input = in.nextLine();
 					if(input.equals("확정")) {
 						
-						useCoupon();
+						String phoneNum = useCoupon();
 						order(orderList);
-						orderUser(totalMenuCnt);
+						orderUser(totalMenuCnt, phoneNum);
 						
 					} else {
 						System.out.println("메뉴현황으로 이동합니다.");
@@ -157,16 +159,10 @@ public class CafeOrderMain {
 		
 	}
 
-	private void useCoupon() {
+	private String useCoupon() {
 
-		System.out.print("포인트 적립 혹은 쿠폰을 사용하시겠습니까?");
+		System.out.print("쿠폰을 사용하시겠습니까?(y/n)");
 		
-		
-	}
-
-	private void orderUser(int totalMenuCnt) {
-
-		System.out.println("적립하시겠습니까?(y/n)");
 		String input = in.nextLine();
 		if(input.toLowerCase().equals("y")) {
 			System.out.println("회원의 전화번호를 입력해주세요");
@@ -177,7 +173,33 @@ public class CafeOrderMain {
 			for(User u : Data.userList) {
 				if(u.getPhoneNum().equals(input)) {
 					
-					System.out.printf("%s의 회원이 적립됩니다.\n", u.getName());
+					System.out.printf("%s의 회원이 쿠폰이 총 %s개 있습니다.\n", u.getName(), u.getCoupon());
+					System.out.println("모든 쿠폰이 사용됩니다. 쿠폰 사용 시 적립할수 없습니다.");
+					System.out.println("쿠폰의 1개의 할인액은 에스프레소 가격입니다.");
+					discount += Data.coffeeMenuList.get(0).getPrice() * Integer.parseInt(u.getCoupon());
+					u.setCoupon("0");
+					
+					Data.saveUser();
+					Data.loadUser();
+					
+					return input;
+				}
+			}
+
+		} 
+		
+		return null;
+		
+	}
+
+	private void orderUser(int totalMenuCnt, String phoneNum) {
+
+		if(phoneNum == null) {
+		
+			for(User u : Data.userList) {
+				if(u.getPhoneNum().equals(phoneNum)) {
+					
+					System.out.printf("%s의 회원이 적립됐습니다.\n", u.getName());
 					
 					totalMenuCnt += Integer.parseInt(u.getPoint());
 					if(totalMenuCnt >= 10) {
@@ -193,7 +215,7 @@ public class CafeOrderMain {
 			
 			Data.saveUser();
 			Data.loadUser();
-			
+				
 		} else {
 			return;
 		}
@@ -233,7 +255,15 @@ public class CafeOrderMain {
 			}
 		}
 		Output.bar();
-		System.out.printf("총 금액: %d원\n", totalPrice);
+		System.out.printf("할인 금액 : %d\n", discount);
+		System.out.printf("총 금액  : %d원\n", totalPrice-discount);	
+		
+		Discount d = new Discount(ordernum, String.format("%s", discount));
+		Data.discountList.add(d);
+		
+		Data.saveDiscount();
+		Data.loadDiscount();
+		
 		Output.Waiting();
 		totalPrice = 0;
 	}

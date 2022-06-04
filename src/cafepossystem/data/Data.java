@@ -13,6 +13,7 @@ public class Data {
 	public static ArrayList<OrderHistory> orderHistory = new ArrayList<OrderHistory>();
 	public static ArrayList<OrderHistoryList> orderHistoryList = new ArrayList<OrderHistoryList>();
 	public static Admin amdin;
+	public static ArrayList<Discount> discountList = new ArrayList<Discount>();
 	
 	public static void loadCoffeeMenu() {
 		
@@ -121,6 +122,12 @@ public class Data {
 		
 	}
 	
+	public static void updateUser() {
+		Data.saveUser();
+		Data.userList.clear();
+		Data.loadUser();
+	}
+	
 	public static void loginAdmin(String id, String pw) {
 		
 		try {
@@ -218,7 +225,7 @@ public class Data {
 			
 			reader.close();
 		} catch (Exception e) {
-			System.out.println("Data.saveOrderHistory");
+			System.out.println("Data.loadOrderHistoryList");
 			e.printStackTrace();
 		}
 	}
@@ -237,18 +244,58 @@ public class Data {
 			
 			writer.close();
 		
-			
-			writer.close();
 		} catch (Exception e) {
 			System.out.println("Data.saveUser");
 			e.printStackTrace();
 		}
 	}
 	
-	public static void updateUser() {
-		Data.saveUser();
-		Data.userList.clear();
-		Data.loadUser();
+	
+
+	public static void loadDiscount() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(DataPath.discountList));
+			
+			String line = null;
+			
+			discountList.clear();
+			
+			while((line = reader.readLine()) != null) {
+				
+				String[] temp = line.split(",");
+
+				Discount d = new Discount(temp[0], temp[1]);
+				
+				discountList.add(d);
+				
+			}
+			
+			reader.close();
+		} catch (Exception e) {
+			System.out.println("Data.loadDiscount");
+			e.printStackTrace();
+		}
+	}
+
+	public static void saveDiscount() {
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DataPath.discountList));
+			
+			for(Discount d : discountList) {
+				String line = String.format("%s,%s\n"
+											, d.getOrderNum()
+											, d.getDiscount());
+				writer.write(line);
+			}
+			
+			writer.close();
+		
+		} catch (Exception e) {
+			System.out.println("Data.saveDiscount");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
