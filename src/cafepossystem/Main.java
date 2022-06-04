@@ -17,6 +17,7 @@ public class Main {
 		Data.loadUser();
 		Data.loadOrderHistory();
 		Data.loadOrderHistoryList();
+		Data.loadDiscount();
 		
 		Scanner in = new Scanner(System.in);
 		

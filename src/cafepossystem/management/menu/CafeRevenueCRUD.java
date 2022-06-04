@@ -4,6 +4,7 @@ import java.util.Calendar;
 import cafepossystem.Output;
 import cafepossystem.data.CoffeeMenu;
 import cafepossystem.data.Data;
+import cafepossystem.data.Discount;
 import cafepossystem.data.OrderHistoryList;
 
 public class CafeRevenueCRUD {
@@ -12,6 +13,7 @@ public class CafeRevenueCRUD {
 	private int totalPrice;
 	private int[] menuCnt;
 	private int[] priceCnt;
+	private int discount;
 	
 	public CafeRevenueCRUD() {
 		
@@ -19,7 +21,7 @@ public class CafeRevenueCRUD {
 		this.totalPrice = 0;
 		this.menuCnt = new int[Data.coffeeMenuList.size()];
 		this.priceCnt = new int[Data.coffeeMenuList.size()];
-		
+		this.discount = 0;
 	}
 	
 	public void readSales(String input) {
@@ -33,16 +35,19 @@ public class CafeRevenueCRUD {
 			Output.bar();
 			AnnualSales();
 			ReadSalesRate();
+			ReadDiscount();
 		} else if(input.equals("2")) {
 			Output.subTitle("월매출");
 			Output.bar();
 			MonthSales();
 			ReadSalesRate();
+			ReadDiscount();
 		} else if(input.equals("3")) {
 			Output.subTitle("일매출");
 			Output.bar();
 			DaySales();
 			ReadSalesRate();
+			ReadDiscount();
 		} else {
 			Output.pause();
 			return;
@@ -51,7 +56,7 @@ public class CafeRevenueCRUD {
 		if(totalPrice == 0) {
 			System.out.println("현재 판매된 내역이 조회되지 않습니다.");
 		} else {
-			System.out.printf("총 매출 : %d원\n", totalPrice);			
+			System.out.printf("총 매출 : %d원\n", totalPrice-discount);			
 			Output.bar();
 			Output.Waiting();
 		}
@@ -72,6 +77,18 @@ public class CafeRevenueCRUD {
 			
 		}
 		
+	}
+	
+	public void ReadDiscount() {
+		System.out.printf("할인 금액: %d원\n", this.discount);
+	}
+	
+	public void countDiscount(String orderNum) {
+		for(Discount d : Data.discountList) {
+			if(orderNum.equals(d.getOrderNum())) {
+				discount += Integer.parseInt(d.getDiscount());
+			}
+		}
 	}
 	
 	public void countSalesRate(String coffeeMenuName, String coffeeMenuCnt, int coffeePrice) {
@@ -95,6 +112,7 @@ public class CafeRevenueCRUD {
 			if(String.format("%04d", now.get(Calendar.YEAR)).equals(ohl.getOrderNum().substring(0, 4))) {
 				totalPrice += ohl.getPrice();
 				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
+				countDiscount(ohl.getOrderNum());
 			}
 		}
 	
@@ -106,6 +124,7 @@ public class CafeRevenueCRUD {
 			if(String.format("%02d", now.get(Calendar.MONTH)+1).equals(ohl.getOrderNum().substring(5, 7))) {
 				totalPrice += ohl.getPrice();
 				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
+				countDiscount(ohl.getOrderNum());
 			}
 		}
 	}
@@ -116,6 +135,7 @@ public class CafeRevenueCRUD {
 			if(String.format("%tF", now).equals(ohl.getOrderNum().substring(0, 10))) {
 				totalPrice += ohl.getPrice();
 				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
+				countDiscount(ohl.getOrderNum());
 			}
 		}
 	}
