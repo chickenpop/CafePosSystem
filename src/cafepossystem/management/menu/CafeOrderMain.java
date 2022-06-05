@@ -38,7 +38,7 @@ public class CafeOrderMain {
 			
 			System.out.println();
 			System.out.println();
-			Output.title("주문 관리");
+			Output.title("\t주문 관리");
 			Output.bar();
 			
 			Output.subTitle("메뉴 현황");
@@ -127,16 +127,20 @@ public class CafeOrderMain {
 					}
 					
 					// 현재 주문 내역 출력
-					Output.bar();
+					MenuOutput.bar();
 					System.out.println("현재 주문 현황");
+					MenuOutput.bar();
+					MenuOutput.OrderMenu();					
 					orderList.stream()
-								.forEach(o -> System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
+								.forEach(o -> System.out.printf("%-8s\t | %4s | %6d원 | %8d원\n"
 																			, o.getCoffeeName()
 																			, o.getCoffeeNum()
 																			, o.getPrice()/Integer.parseInt(o.getCoffeeNum())
 																			, o.getPrice()));
-					System.out.printf("현재 총 금액 : %d\n", totalPrice);
-					System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요(아니라면 엔터를 입력해주세요");
+					MenuOutput.bar();
+					System.out.printf("현재 총 금액\t\t\t%13d원\n", totalPrice);
+					MenuOutput.bar();
+					System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요(진행을 원하면 엔터)");
 					input = in.nextLine();
 					if(input.equals("확정")) {
 						
@@ -148,7 +152,7 @@ public class CafeOrderMain {
 					} else {
 						System.out.println("메뉴현황으로 이동합니다.");
 					}
-					Output.bar();
+					MenuOutput.bar();
 				} else {
 					System.out.println("잘못된 메뉴 선택입니다.");
 					Output.pause();
@@ -162,11 +166,11 @@ public class CafeOrderMain {
 
 	private String useCoupon() {
 
-		System.out.print("쿠폰을 사용하시겠습니까?(y/n)");
+		System.out.print("쿠폰을 사용하시겠습니까?(y/n) : ");
 		
 		String input = in.nextLine();
 		if(input.toLowerCase().equals("y")) {
-			System.out.println("회원의 전화번호를 입력해주세요");
+			MenuOutput.UserPhoneNum();
 			input = in.nextLine();
 			
 			input = input.replace(" ", ""); // 공백제거
@@ -174,10 +178,12 @@ public class CafeOrderMain {
 			for(User u : Data.userList) {
 				if(u.getPhoneNum().equals(input)) {
 					
-					System.out.printf("%s의 회원이 쿠폰이 총 %s개 있습니다.\n", u.getName(), u.getCoupon());
-					System.out.println("쿠폰의 1개의 할인액은 에스프레소 가격입니다.");
+					
+					System.out.printf("%s의 회원님 쿠폰이 총 %s개 있습니다.\n", u.getName(), u.getCoupon());
+					System.out.println("쿠폰의 1개는 에스프레소 가격입니다.");
 					System.out.println("쿠폰 사용을 취소하시려면 0을 입력해주세요");
-					System.out.print("사용하시려는 쿠폰 갯수를 입력해주세요:");
+					System.out.println("사용하시려는 쿠폰 갯수를 입력해주세요");
+					System.out.print("쿠폰:");
 					String coupon = in.nextLine();
 					coupon = UserCRUD.inputIsNumber(coupon, 0);  // 숫자 유효성 검사
 					if(coupon.equals("0")) return null; // 쿠폰 입력을 0으로 하는 경우 쿠폰 사용이 취소된다.
@@ -200,10 +206,11 @@ public class CafeOrderMain {
 	private void orderUser(int totalMenuCnt, String phoneNum) {
 
 		if(phoneNum == null) {
-			System.out.println("적립하시겠습니까?");
+			System.out.print("적립하시겠습니까?(y/n) : ");
 			String input = in.nextLine();
 			if(input.toLowerCase().equals("y")) {
-				System.out.println("회원의 전화번호를 입력해주세요");
+				
+				MenuOutput.UserPhoneNum();
 				input = in.nextLine();
 				
 				input = input.replace(" ", ""); // 공백제거
@@ -211,7 +218,7 @@ public class CafeOrderMain {
 				for(User u : Data.userList) {
 					if(u.getPhoneNum().equals(input)) {
 						
-						System.out.printf("%s의 회원이 적립됐습니다.\n", u.getName());
+						System.out.printf("%s의 회원님 적립됐습니다.\n", u.getName());
 						
 						totalMenuCnt += Integer.parseInt(u.getPoint());
 						if(totalMenuCnt >= 10) {
@@ -254,12 +261,13 @@ public class CafeOrderMain {
 		Data.loadOrderHistoryList();
 		
 		
-		Output.bar();
+		MenuOutput.bar();
 		System.out.println("최종 영수증 출력");
-		Output.bar();
+		MenuOutput.bar();
+		MenuOutput.OrderMenu();
 		for(OrderHistoryList ohl : Data.orderHistoryList) {
 			if(Data.orderHistory.get(Data.orderHistory.size()-1).getOrderNum().equals(ohl.getOrderNum())){
-				 System.out.printf("메뉴 : %s 수량 : %s 메뉴금액: %d원 합계금액 %d원\n"
+				 System.out.printf("%-8s\t | %4s | %6d원 | %8d원\n"
 							, ohl.getCoffeeName()
 							, ohl.getCoffeeNum()
 							, ohl.getPrice()/Integer.parseInt(ohl.getCoffeeNum())
@@ -267,9 +275,10 @@ public class CafeOrderMain {
 				 totalMenuCnt += Integer.parseInt(ohl.getCoffeeNum());
 			}
 		}
-		Output.bar();
-		System.out.printf("할인 금액 : %d원\n", discount);
-		System.out.printf("총 금액  : %d원\n", totalPrice-discount);	
+		MenuOutput.bar();
+		System.out.printf("할인 금액\t\t\t%13d원\n", discount);
+		System.out.printf("총 금액\t\t\t\t%13d원\n", totalPrice-discount);	
+		MenuOutput.bar();
 		
 		if(totalPrice-discount < 0) {
 			discount = totalPrice;

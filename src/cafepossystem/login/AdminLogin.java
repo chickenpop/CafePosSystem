@@ -12,10 +12,10 @@ public class AdminLogin {
 		
 		Output.title("\t   로그인");
 		Output.bar();
-		System.out.print("\t  아이디:");
+		System.out.print("\t    아이디  :");
 		String id = in.nextLine();
 		
-		System.out.print("\t  비밀번호:");
+		System.out.print("\t    비밀번호:");
 		String pw = in.nextLine();
 		Output.bar();
 		
