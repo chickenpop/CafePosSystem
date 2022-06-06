@@ -44,6 +44,10 @@ public class Output {
 		System.out.printf("-%s-\n", subTitle);
 	}
 	
+	public static void subTitle(String sutTitle, String additionalElements) {
+		System.out.printf("-%s- %s\n", sutTitle, additionalElements);
+	}
+	
 	public static void pause() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("잘못된 입력입니다.");

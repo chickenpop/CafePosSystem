@@ -16,18 +16,19 @@ public class CafeOrderMain {
 
 	private int totalPrice = 0; 		// 주문 합계 가격
 	private int totalMenuCnt = 0;
-	private CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
 	private int currentMenuPrice = 0; 	// 선택된 메뉴 * 수량
 	private int ordercnt;
 	private int seq = Data.orderHistoryList.size()+1;
+	private int discount = 0;
+	private CoffeeMenu pickCoffee = new CoffeeMenu("0", "미선택메뉴", 0); 		// 선택된 메뉴
 	private Calendar now = Calendar.getInstance();
 	private Scanner in = new Scanner(System.in);
-	private int discount = 0;
 	
 	public void managementCafeOrder() {
 		
 		ordercnt = ordercnt();
-		// 주문 메뉴 출력
+		
+		// 주문 메뉴 페이지 변수
 		int currentPage = 1; // 현재 페이지
 		int pageBlock = 5;  // 페이지 당 목록 수
 		
@@ -38,12 +39,16 @@ public class CafeOrderMain {
 			
 			System.out.println();
 			System.out.println();
-			Output.title("\t주문 관리");
+			Output.title("\t주문 관리");			
+			Output.bar();
+			if(orderList.size() > 0) {
+				Output.subTitle("메뉴 현황", "\t\t\t  [주문진행중]");				
+			} else {
+				Output.subTitle("메뉴 현황");				
+			}
 			Output.bar();
 			
-			Output.subTitle("메뉴 현황");
-			Output.bar();
-			// 페이징
+			// 주문 메뉴 페이지 변수
 			int totalPage = Data.coffeeMenuList.size()/pageBlock + ((Data.coffeeMenuList.size()%pageBlock) > 0 ? 1 : 0); // 총 페이지		
 			int currentBlock = currentPage-1;	// 현재 목록 번호
 			int startNum = currentBlock*pageBlock+1;
@@ -75,8 +80,8 @@ public class CafeOrderMain {
 			if(input.equals("0")) {
 				// 뒤로가기
 				break;
-			} else if(Data.isString(input)) {
-				// 페이지 이동
+			} else if(Data.isString(input)) { 
+				// p + 숫자 형태라면 페이지 이동
 				if(input.toLowerCase().contains("p")) {
 					input = input.toLowerCase().replace("p", "");
 					int pageNum = Integer.parseInt(input);
@@ -90,6 +95,7 @@ public class CafeOrderMain {
 					}
 				}
 				
+				// '취소'라는 단어가 입력되면 주문 내역 clear
 				if(input.equals("취소")) {
 					orderList.clear();
 					totalPrice = 0;
@@ -98,6 +104,7 @@ public class CafeOrderMain {
 				
 			} else { 
 				
+				// 입력한 메뉴 찾기
 				for(CoffeeMenu cf : Data.coffeeMenuList) {
 					
 					if(cf.getSeq().equals(input)) {
@@ -108,40 +115,9 @@ public class CafeOrderMain {
 				}
 				
 				if(!pickCoffee.getSeq().equals("0")) {
-					// 수량 선택
-					boolean flag = true;
-					String num = null;
-					while(flag) {
-						System.out.println("선택한 메뉴의 수량을 입력해주세요");
-						System.out.print("수량:");
-						num = in.nextLine();
-						flag = pickCoffeeMenuCnt(num);
-					}
 					
-					now = Calendar.getInstance();
-					String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
-
-					OrderHistoryList ohl = new OrderHistoryList(seq++, pickCoffee.getCoffeeName(), num, currentMenuPrice, ordernum);
-					if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
-						orderList.add(ohl);					
-					}
+					input = pickMenuPrintOrder(orderList);
 					
-					// 현재 주문 내역 출력
-					MenuOutput.bar();
-					System.out.println("현재 주문 현황");
-					MenuOutput.bar();
-					MenuOutput.OrderMenu();					
-					orderList.stream()
-								.forEach(o -> System.out.printf("%-8s\t | %4s | %6d원 | %8d원\n"
-																			, o.getCoffeeName()
-																			, o.getCoffeeNum()
-																			, o.getPrice()/Integer.parseInt(o.getCoffeeNum())
-																			, o.getPrice()));
-					MenuOutput.bar();
-					System.out.printf("현재 총 금액\t\t\t%13d원\n", totalPrice);
-					MenuOutput.bar();
-					System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요(진행을 원하면 엔터)");
-					input = in.nextLine();
 					if(input.equals("확정")) {
 						
 						String phoneNum = useCoupon();
@@ -162,10 +138,54 @@ public class CafeOrderMain {
 		}
 	
 		
+	} // managementCafeOrder
+
+	private String pickMenuPrintOrder(ArrayList<OrderHistoryList> orderList) {
+		String input;
+		// 수량 선택
+		boolean flag = true;
+		String num = null;
+		while(flag) {
+			
+			MenuOutput.bar();
+			System.out.println("선택한 메뉴의 수량을 입력해주세요");
+			System.out.print("수량:");
+			num = in.nextLine();
+			flag = pickCoffeeMenuCnt(num);
+			MenuOutput.bar();
+		}
+		
+		now = Calendar.getInstance();
+		String ordernum = String.format("%tF%s%03d", now, Data.amdin.getStatus(), ordercnt);
+
+		OrderHistoryList ohl = new OrderHistoryList(seq++, pickCoffee.getCoffeeName(), num, currentMenuPrice, ordernum);
+		if(!ohl.getCoffeeNum().equals("0") && !pickCoffee.getSeq().equals("0")) {
+			orderList.add(ohl);					
+		}
+		
+		// 현재 주문 내역 출력
+		MenuOutput.bar();
+		System.out.println("현재 주문 현황");
+		MenuOutput.bar();
+		MenuOutput.OrderMenu();					
+		orderList.stream()
+					.forEach(o -> System.out.printf("%-8s\t | %4s | %6d원 | %8d원\n"
+																, o.getCoffeeName()
+																, o.getCoffeeNum()
+																, o.getPrice()/Integer.parseInt(o.getCoffeeNum())
+																, o.getPrice()));
+		MenuOutput.bar();
+		System.out.printf("현재 총 금액\t\t\t%13d원\n", totalPrice);
+		MenuOutput.bar();
+		System.out.println("주문을 확정하시려면 \"확정\"을 입력해주세요(아니라면 엔터)");
+		input = in.nextLine();
+		return input;
 	}
 
+	// 쿠폰 사용 기능
 	private String useCoupon() {
 
+		MenuOutput.bar();
 		System.out.print("쿠폰을 사용하시겠습니까?(y/n) : ");
 		
 		String input = in.nextLine();
@@ -173,6 +193,7 @@ public class CafeOrderMain {
 			MenuOutput.UserPhoneNum();
 			input = in.nextLine();
 			
+			MenuOutput.bar();
 			input = input.replace(" ", ""); // 공백제거
 			
 			for(User u : Data.userList) {
@@ -182,6 +203,7 @@ public class CafeOrderMain {
 					System.out.printf("%s의 회원님 쿠폰이 총 %s개 있습니다.\n", u.getName(), u.getCoupon());
 					System.out.println("쿠폰의 1개는 에스프레소 가격입니다.");
 					System.out.println("쿠폰 사용을 취소하시려면 0을 입력해주세요");
+					MenuOutput.bar();
 					System.out.println("사용하시려는 쿠폰 갯수를 입력해주세요");
 					System.out.print("쿠폰:");
 					String coupon = in.nextLine();
@@ -203,6 +225,7 @@ public class CafeOrderMain {
 		
 	}
 
+	// 적립 기능
 	private void orderUser(int totalMenuCnt, String phoneNum) {
 
 		if(phoneNum == null) {
@@ -218,7 +241,9 @@ public class CafeOrderMain {
 				for(User u : Data.userList) {
 					if(u.getPhoneNum().equals(input)) {
 						
+						MenuOutput.bar();
 						System.out.printf("%s의 회원님 적립됐습니다.\n", u.getName());
+						MenuOutput.bar();
 						
 						totalMenuCnt += Integer.parseInt(u.getPoint());
 						if(totalMenuCnt >= 10) {
@@ -242,6 +267,7 @@ public class CafeOrderMain {
 		
 	}
 
+	// 주문 확정
 	private void order(ArrayList<OrderHistoryList> orderList) {
 		now = Calendar.getInstance();
 		
