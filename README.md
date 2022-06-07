@@ -2,11 +2,11 @@
 
 ## 자바 콘솔 토이프로젝트<카페관리시스템>
 
-## 사용 환경
+## 개발 환경
 
 <img src="https://img.shields.io/badge/Eclipse%20IDE-2C2255?style=flat&logo=Eclipse%20IDE&logoColor=white"/>
 
-## 사용 언어
+## 개발 언어
 
 <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=Java&logoColor=white"/>
 
@@ -41,9 +41,11 @@
 
 ---
 
-## 완료
+### 공통 기능
 
-- 카페관리시스템을 구축하기 위한 더미 데이터 생성
+- 아이템 수에 따른 페이지 이동 기능
+
+### 메뉴별 기능
 
 - 메뉴관리, 카페에서 판매하는 메뉴의 CRUD기능
 
@@ -51,9 +53,9 @@
   - 회원 CRUD
   - 회원의 포인트, 쿠폰 수 관리
 
-- 관리자 로그인
-
-- 관리자 로그아웃
+- 관리자 
+  - 로그인
+  - 로그아웃
 
 - 주문관리
   - 주문 내역(비회원)
