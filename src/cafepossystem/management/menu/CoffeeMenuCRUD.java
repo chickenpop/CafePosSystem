@@ -23,20 +23,30 @@ public class CoffeeMenuCRUD {
 			if(checkCoffeeName(name)) {
 				break;
 			} else {
+				Output.bar();
 				System.out.println("메뉴명이 유효하지 않습니다.");
 				System.out.println("메뉴명을 다시 입력해주세요");
+				Output.bar();
 			}
 		}
 		// 가격
 		while(true) {
+			Output.bar();
 			System.out.println("메뉴의 가격을 입력해주세요");
 			System.out.print("가격: ");
 			price = in.nextLine();
+			
 			if(checkPrice(price)) {
+				
+				Output.bar();
+				System.out.println("메뉴가 추가되었습니다.");
+				Output.Waiting();
 				break;
 			} else {
+				Output.bar();
 				System.out.println("가격이 유효하지 않습니다.");
 				System.out.println("가격을 다시 입력해주세요");
+				Output.bar();
 			}
 		}
 		
@@ -77,8 +87,10 @@ public class CoffeeMenuCRUD {
 			
 		}
 		
+		Output.bar();
 		System.out.println("수정이 완료되었습니다.");
 		Data.updateMenu();
+		Output.Waiting();
 	}
 	
 	public static boolean deleteCoffeeMenu() {
@@ -100,12 +112,16 @@ public class CoffeeMenuCRUD {
 		}
 		
 		if(cf != null) {
+			Output.bar();
 			System.out.printf("%s삭제되었습니다.\n", cf.getCoffeeName());
+			Output.bar();
 			Data.coffeeMenuList.remove(cf);
 			Data.updateMenu();
+			Output.Waiting();
 			return true;
 		} else {
 			System.out.println("삭제가 실패하였습니다.");
+			Output.Waiting();
 			return false;
 		}
 		

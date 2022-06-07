@@ -41,7 +41,9 @@ public class Output {
 	}
 	
 	public static void subTitle(String subTitle) {
+		bar();
 		System.out.printf("-%s-\n", subTitle);
+		bar();
 	}
 	
 	public static void subTitle(String sutTitle, String additionalElements) {

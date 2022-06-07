@@ -39,14 +39,11 @@ public class CafeOrderMain {
 			
 			System.out.println();
 			System.out.println();
-			Output.title("\t주문 관리");			
-			Output.bar();
-			if(orderList.size() > 0) {
+			Output.title("\t주문 관리");						if(orderList.size() > 0) {
 				Output.subTitle("메뉴 현황", "\t\t\t  [주문진행중]");				
 			} else {
 				Output.subTitle("메뉴 현황");				
 			}
-			Output.bar();
 			
 			// 주문 메뉴 페이지 변수
 			int totalPage = Data.coffeeMenuList.size()/pageBlock + ((Data.coffeeMenuList.size()%pageBlock) > 0 ? 1 : 0); // 총 페이지		
