@@ -68,6 +68,14 @@ public class CoffeeMenuCRUD {
 		System.out.print("수정 메뉴이름:");
 		String menuName = in.nextLine();
 		
+		if(!checkCoffeeName(menuName)) {
+			Output.bar();
+			System.out.println("잘못된 메뉴명입니다.");
+			System.out.println("메뉴현황으로 이동합니다.");
+			Output.Waiting();
+			return;
+		}
+		
 		System.out.print("수정 가격:");
 		String menuPrice = in.nextLine();
 		
