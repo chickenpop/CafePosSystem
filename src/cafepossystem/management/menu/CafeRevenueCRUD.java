@@ -66,20 +66,21 @@ public class CafeRevenueCRUD {
 		
 		System.out.println("판매수량");
 		Output.bar();
-		System.out.println("수량\t|\t판매액 |\t메뉴명");
+		System.out.println("메뉴명\t\t|  수량  |  판매액  |");
 		Output.bar();
 		for(CoffeeMenu cm : Data.coffeeMenuList) {
 			
-			System.out.printf("%8d|%12d원|%-8s\n"
+			System.out.printf("%-8s\t|%6d잔|%8d원|\n"
+					, cm.getCoffeeName()
 					, this.menuCnt[Integer.parseInt(cm.getSeq())-1]
-					, this.priceCnt[Integer.parseInt(cm.getSeq())-1]
-				    , cm.getCoffeeName());
+					, this.priceCnt[Integer.parseInt(cm.getSeq())-1]);
 			
 		}
 		
 	}
 	
 	public void ReadDiscount() {
+		Output.bar();
 		System.out.printf("할인 금액: %d원\n", this.discount);
 	}
 	

@@ -15,4 +15,19 @@ public class MenuOutput {
 		System.out.print("전화번호 : ");	
 	}
 	
+	public static void title(String titleName) {
+		bar();
+		System.out.printf("\t     %s\n", titleName);
+	}
+	
+	public static void subTitle(String subTitle) {
+		bar();
+		System.out.printf("-%s-\n", subTitle);
+		bar();
+	}
+	
+	public static void subTitle(String sutTitle, String additionalElements) {
+		System.out.printf("-%s- %s\n", sutTitle, additionalElements);
+	}
+	
 }
