@@ -128,38 +128,42 @@ public class UserCRUD {
 		System.out.print("삭제하려는 회원 번호:");
 		String seq = in.nextLine();
 		
-		System.out.printf("삭제하려는 회원은 %s입니다.\n", Data.userList.get(Integer.parseInt(seq)-1).getName());
-		System.out.println("상세정보는 다음과 같습니다.");
-		System.out.println("주소 전화번호 쿠폰");
-		System.out.printf("%s %s %s\n"
-							, Data.userList.get(Integer.parseInt(seq)-1).getAddress()
-							, Data.userList.get(Integer.parseInt(seq)-1).getPhoneNum()
-							, Data.userList.get(Integer.parseInt(seq)-1).getCoupon());
+		User us = null;
+		MenuOutput.bar();
+		for(User u : Data.userList) {
+			if(u.getSeq().equals(seq)) {
+				System.out.printf("삭제하려는 회원은 %s입니다.\n", u.getName());
+				System.out.println("상세정보는 다음과 같습니다.");
+				MenuOutput.bar();
+				System.out.println("  전화번호  |  주소\t| 포인트 | 쿠폰 |");
+				System.out.printf("%12s|%-4s\t|%8s|%6s|\n"					
+						, u.getPhoneNum()
+						, u.getAddress().substring(u.getAddress().lastIndexOf(" "))
+						, u.getPoint()
+						, u.getCoupon());
+				us = u;
+				break;
+			}
+		}
 		
+		
+		MenuOutput.bar();
 		System.out.println("진행하시려면 엔터를 취소하려면 0을 입력하세요");
 		String input = in.nextLine();
 		if(input.equals("0")) {
 			return false;
 		}
 		
-		User u = null;
 		
-		for(User us : Data.userList) {
-			
-			if(us.getSeq().equals(seq)) {
-				u = us;
-				break;
-			}
-			
-		}
-		
-		if(u != null) {
-			System.out.printf("%s삭제되었습니다.\n", u.getName());
-			Data.userList.remove(u);
+		if(us != null) {
+			System.out.printf("%s님 삭제되었습니다.\n", us.getName());
+			Data.userList.remove(us);
 			Data.updateUser();
+			Output.Waiting();
 			return true;
 		} else {
 			System.out.println("삭제가 실패하였습니다.");
+			Output.Waiting();
 			return false;
 		}
 		
