@@ -33,19 +33,19 @@ public class CafeRevenueCRUD {
 		if(input.equals("1")) {
 			Output.subTitle("연매출");
 			Output.bar();
-			AnnualSales();
+			sales("year");
 			ReadSalesRate();
 			ReadDiscount();
 		} else if(input.equals("2")) {
 			Output.subTitle("월매출");
 			Output.bar();
-			MonthSales();
+			sales("month");
 			ReadSalesRate();
 			ReadDiscount();
 		} else if(input.equals("3")) {
 			Output.subTitle("일매출");
 			Output.bar();
-			DaySales();
+			sales("day");
 			ReadSalesRate();
 			ReadDiscount();
 		} else {
@@ -107,40 +107,41 @@ public class CafeRevenueCRUD {
 		
 	}
 	
-	public void AnnualSales() {
+	public void sales(String type) {
+		
+		String sales = null;
+		int startIdx = 0;
+		int endIdx = 0;
+		
+		if(type.equals("year")) {
+			sales = String.format("%04d", now.get(Calendar.YEAR));
+			startIdx = 0;
+			endIdx = 4;
+		} else if(type.equals("month")) {
+			sales = String.format("%02d", now.get(Calendar.MONTH)+1);
+			startIdx = 5;
+			endIdx = 7;
+		} else if(type.equals("day")) {
+			sales = String.format("%tF", now);
+			startIdx = 0;
+			endIdx = 10;
+		} else {
+			System.out.println("sales() 잘못된 매개변수입니다.");
+			return;
+		}
 		
 		for(OrderHistoryList ohl : Data.orderHistoryList) {
-			if(String.format("%04d", now.get(Calendar.YEAR)).equals(ohl.getOrderNum().substring(0, 4))) {
+			if(sales.equals(ohl.getOrderNum().substring(startIdx, endIdx))) {
 				totalPrice += ohl.getPrice();
 				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
 				countDiscount(ohl.getOrderNum());
 			}
 		}
 	
-	}
-	
-	public void MonthSales() {
-
-		for(OrderHistoryList ohl : Data.orderHistoryList) {
-			if(String.format("%02d", now.get(Calendar.MONTH)+1).equals(ohl.getOrderNum().substring(5, 7))) {
-				totalPrice += ohl.getPrice();
-				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
-				countDiscount(ohl.getOrderNum());
-			}
-		}
-	}
-
-	public void DaySales() {
 		
-		for(OrderHistoryList ohl : Data.orderHistoryList) {
-			if(String.format("%tF", now).equals(ohl.getOrderNum().substring(0, 10))) {
-				totalPrice += ohl.getPrice();
-				countSalesRate(ohl.getCoffeeName(), ohl.getCoffeeNum(), ohl.getPrice());
-				countDiscount(ohl.getOrderNum());
-			}
-		}
+		
 	}
-	
+
 }
 
 
