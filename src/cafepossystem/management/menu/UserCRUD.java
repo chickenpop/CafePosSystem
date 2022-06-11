@@ -55,24 +55,27 @@ public class UserCRUD {
 		System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");
 		System.out.print("수정하려는 회원 번호:");
 		String seq = in.nextLine();
-		
-		System.out.println("회원 상세 정보");
+
+		// 수정하려는 유저 정보
 		User user = Data.userList.get(Integer.parseInt(seq)-1);
 		
+		
+		MenuOutput.address();
 		System.out.print("수정 이름:");
 		String name = in.nextLine();
 		if(name.equals("")) {
 			name = user.getName();
 		} else {
-			checkRequirement(name);
+			name = checkRequirement(name);
 		}
 		
+		MenuOutput.address();
 		System.out.print("수정 주소:");
 		String address = in.nextLine();
 		if(address.equals("")) {
 			address = user.getAddress();
 		} else {
-			checkAddress(address, true);
+			address = checkAddress(address, true);
 		}
 		
 		System.out.print("수정 전화번호:");
@@ -80,7 +83,7 @@ public class UserCRUD {
 		if(phoneNum.equals("")) {
 			phoneNum = user.getPhoneNum();
 		} else {
-			checkPhoneNum(phoneNum, true);
+			phoneNum = checkPhoneNum(phoneNum, true);
 		}
 		
 		
@@ -201,6 +204,7 @@ public class UserCRUD {
 				}
 			}
 			if(flag) {
+				MenuOutput.address();
 				System.out.println("!다시 입력해주세요!");
 				address = in.nextLine();
 			}

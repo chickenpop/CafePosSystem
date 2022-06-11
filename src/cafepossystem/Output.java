@@ -66,5 +66,6 @@ public class Output {
 	public static void bar() {
 		System.out.println("===============================================");
 	}
+
 	
 }

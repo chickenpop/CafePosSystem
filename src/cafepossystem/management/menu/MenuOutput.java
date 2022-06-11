@@ -30,4 +30,9 @@ public class MenuOutput {
 		System.out.printf("-%s- %s\n", sutTitle, additionalElements);
 	}
 	
+	public static void address() {
+		System.out.println("강남구 내에 거주하는 사람만 가입할 수 있습니다.");
+		System.out.println("강남구의 읍면동만 입력해주세요(ex)역삼동)");
+	}
+	
 }
