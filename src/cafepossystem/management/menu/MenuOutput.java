@@ -35,4 +35,9 @@ public class MenuOutput {
 		System.out.println("강남구의 읍면동만 입력해주세요(ex)역삼동)");
 	}
 	
+	public static void inputDataName(String input) {
+		bar();
+		System.out.printf("%s: ", input);
+	}
+	
 }

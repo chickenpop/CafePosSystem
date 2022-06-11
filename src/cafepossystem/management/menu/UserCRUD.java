@@ -51,17 +51,16 @@ public class UserCRUD {
 
 	public static void updateUser() {
 
-		Output.subTitle("회원 정보 수정");
+		MenuOutput.subTitle("회원 정보 수정");
 		System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");
 		System.out.print("수정하려는 회원 번호:");
 		String seq = in.nextLine();
 
 		// 수정하려는 유저 정보
-		User user = Data.userList.get(Integer.parseInt(seq)-1);
+		MenuOutput.bar();
+		User user = checkTargetUser(seq);
 		
-		
-		MenuOutput.address();
-		System.out.print("수정 이름:");
+		MenuOutput.inputDataName("수정 이름");
 		String name = in.nextLine();
 		if(name.equals("")) {
 			name = user.getName();
@@ -70,7 +69,7 @@ public class UserCRUD {
 		}
 		
 		MenuOutput.address();
-		System.out.print("수정 주소:");
+		MenuOutput.inputDataName("수정 주소");
 		String address = in.nextLine();
 		if(address.equals("")) {
 			address = user.getAddress();
@@ -78,7 +77,7 @@ public class UserCRUD {
 			address = checkAddress(address, true);
 		}
 		
-		System.out.print("수정 전화번호:");
+		MenuOutput.inputDataName("수정 전화번호");
 		String phoneNum = in.nextLine();
 		if(phoneNum.equals("")) {
 			phoneNum = user.getPhoneNum();
@@ -86,8 +85,7 @@ public class UserCRUD {
 			phoneNum = checkPhoneNum(phoneNum, true);
 		}
 		
-		
-		System.out.print("수정 포인트:");
+		MenuOutput.inputDataName("수정 포인트");
 		String point = in.nextLine();
 		if(point.equals("")) {
 			point = user.getPoint();
@@ -95,7 +93,7 @@ public class UserCRUD {
 			point = inputIsNumber(point, Integer.parseInt(user.getPoint()));
 		}
 		
-		System.out.print("수정 쿠폰:");
+		MenuOutput.inputDataName("수정 쿠폰");
 		String coupon = in.nextLine();
 		if(coupon.equals("")) {
 			coupon = user.getCoupon();
@@ -131,24 +129,7 @@ public class UserCRUD {
 		System.out.print("삭제하려는 회원 번호:");
 		String seq = in.nextLine();
 		
-		User us = null;
-		MenuOutput.bar();
-		for(User u : Data.userList) {
-			if(u.getSeq().equals(seq)) {
-				System.out.printf("삭제하려는 회원은 %s입니다.\n", u.getName());
-				System.out.println("상세정보는 다음과 같습니다.");
-				MenuOutput.bar();
-				System.out.println("  전화번호  |  주소\t| 포인트 | 쿠폰 |");
-				System.out.printf("%12s|%-4s\t|%8s|%6s|\n"					
-						, u.getPhoneNum()
-						, u.getAddress().substring(u.getAddress().lastIndexOf(" "))
-						, u.getPoint()
-						, u.getCoupon());
-				us = u;
-				break;
-			}
-		}
-		
+		User us = checkTargetUser(seq);
 		
 		MenuOutput.bar();
 		System.out.println("진행하시려면 엔터를 취소하려면 0을 입력하세요");
@@ -156,7 +137,6 @@ public class UserCRUD {
 		if(input.equals("0")) {
 			return false;
 		}
-		
 		
 		if(us != null) {
 			System.out.printf("%s님 삭제되었습니다.\n", us.getName());
@@ -171,6 +151,37 @@ public class UserCRUD {
 		}
 		
 		
+	}
+	
+	private static User checkTargetUser(String seq) {
+		
+		if(Integer.parseInt(seq) < 0 || Integer.parseInt(seq) > Data.userList.size()) {
+			System.out.println("잘못된 입력입니다.");
+			System.out.println("!다시 입력해주세요!");
+			while(true) {
+				seq = in.nextLine();
+				System.out.println(seq);
+				if(Integer.parseInt(seq) > 0 || Integer.parseInt(seq) < Data.userList.size()) break;
+			}
+		} 
+		
+		User user = null;
+		for(User u : Data.userList) {
+			if(u.getSeq().equals(seq)) {
+				user = u;
+				break;
+			}
+		}
+		System.out.println("번호| 이름  |  전화번호  |  주소\t| 포인트 | 쿠폰 |");
+		System.out.printf("%4s|%-4s|%12s|%-4s\t|%8s|%6s|\n"
+								, user.getSeq()
+								, user.getName()
+								, user.getPhoneNum()
+								, user.getAddress().substring(user.getAddress().lastIndexOf(" "))
+								, user.getPoint()
+								, user.getCoupon());
+		
+		return user;
 	}
 
 	public static String checkPhoneNum(String phoneNum, boolean flag) {
