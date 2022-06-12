@@ -14,7 +14,7 @@ public class UserCRUD {
 
 		Output.subTitle("유저 회원가입");
 
-		String seq = Data.userList.size() + 1 + "";
+		String seq = String.format("%s", lastUserSeq()+1);
 		
 		System.out.print("유저 이름:");
 		String name = in.nextLine();
@@ -153,15 +153,19 @@ public class UserCRUD {
 		
 	}
 	
+	private static int lastUserSeq() {	
+		return Integer.parseInt(Data.userList.get(Data.userList.size()-1).getSeq());
+	}
+	
 	private static User checkTargetUser(String seq) {
 		
-		if(Integer.parseInt(seq) < 0 || Integer.parseInt(seq) > Data.userList.size()) {
+		if(Integer.parseInt(seq) < 0 || Integer.parseInt(seq) > lastUserSeq()) {
 			System.out.println("잘못된 입력입니다.");
 			System.out.println("!다시 입력해주세요!");
 			while(true) {
 				seq = in.nextLine();
 				System.out.println(seq);
-				if(Integer.parseInt(seq) > 0 || Integer.parseInt(seq) < Data.userList.size()) break;
+				if(Integer.parseInt(seq) > 0 || Integer.parseInt(seq) < lastUserSeq()) break;
 			}
 		} 
 		
