@@ -12,7 +12,7 @@ public class CoffeeMenuCRUD {
 	public static void addCoffeeMenu() {
 		
 		Output.subTitle("메뉴 추가");
-		String seq = Data.coffeeMenuList.size() + 1 + "";
+		String seq = String.format("%s", String.format("%s", Data.lastMenuSeq()+1));
 		String name;
 		String price;
 		// 메뉴명
@@ -64,7 +64,7 @@ public class CoffeeMenuCRUD {
 		System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");
 		System.out.print("수정하려는 메뉴 번호:");
 		String seq = in.nextLine();
-		
+
 		System.out.print("수정 메뉴이름:");
 		String menuName = in.nextLine();
 		

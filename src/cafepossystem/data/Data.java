@@ -23,6 +23,8 @@ public class Data {
 			
 			String line = null;
 			
+			coffeeMenuList.clear();
+			
 			while((line = reader.readLine()) != null) {
 				
 				String[] temp = line.split(",");
@@ -65,6 +67,10 @@ public class Data {
 		Data.saveCoffeeMenu();
 		Data.coffeeMenuList.clear();
 		Data.loadCoffeeMenu();
+	}
+	
+	public static int lastMenuSeq() {	
+		return Integer.parseInt(Data.coffeeMenuList.get(Data.coffeeMenuList.size()-1).getSeq());
 	}
 	
 	public static void loadUser() {
@@ -127,6 +133,11 @@ public class Data {
 		Data.userList.clear();
 		Data.loadUser();
 	}
+	
+	public static int lastUserSeq() {	
+		return Integer.parseInt(Data.userList.get(Data.userList.size()-1).getSeq());
+	}
+	
 	
 	public static void loginAdmin(String id, String pw) {
 		
