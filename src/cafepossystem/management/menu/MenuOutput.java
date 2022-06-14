@@ -31,8 +31,10 @@ public class MenuOutput {
 	}
 	
 	public static void address() {
+		bar();
 		System.out.println("강남구 내에 거주하는 사람만 가입할 수 있습니다.");
 		System.out.println("강남구의 읍면동만 입력해주세요(ex)역삼동)");
+		System.out.print("주소: ");
 	}
 	
 	public static void inputDataName(String input) {

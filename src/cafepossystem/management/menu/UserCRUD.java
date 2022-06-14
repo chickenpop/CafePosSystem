@@ -14,30 +14,29 @@ public class UserCRUD {
 
 		Output.subTitle("유저 회원가입");
 
-		String seq = String.format("%s", Data.lastUserSeq()+1);
+		String seq = String.format("%s", Data.getLastUserSeq()+1);
 		
-		System.out.print("유저 이름:");
+		MenuOutput.inputDataName("유저 이름");
 		String name = in.nextLine();
 		name = checkRequirement(name);
 		
-		System.out.println("강남구 내에 거주하는 사람만 가입할 수 있습니다.");
-		System.out.println("강남에 존재하는 읍면동만 입력해주세요(ex 역삼동)");
+		MenuOutput.address();
 		String address = in.nextLine();
 		address = checkAddress(address, true);
 		
 		System.out.println("전화번호는 '-'없이 입력해주세요");
-		System.out.print("유저 전화번호:");
+		MenuOutput.inputDataName("유저 전화번호");
 		String phoneNum = in.nextLine();
 
 		phoneNum = checkPhoneNum(phoneNum, true);
 		
 		System.out.println("엔터를 입력하시면 가입 포인트로 적용됩니다.");
-		System.out.print("유저 포인트:");
+		MenuOutput.inputDataName("유저 포인트");
 		String point = in.nextLine();
 		point = inputIsNumber(point, 0);
 		
 		System.out.println("엔터를 입력하시면 가입 쿠폰이 적용됩니다.");
-		System.out.print("유저 쿠폰:");
+		MenuOutput.inputDataName("유저 쿠폰");
 		String coupon = in.nextLine();
 		coupon = inputIsNumber(coupon, 1);
 		
@@ -53,7 +52,7 @@ public class UserCRUD {
 
 		MenuOutput.subTitle("회원 정보 수정");
 		System.out.println("수정하고 싶지 않으면 엔터를 입력해주세요");
-		System.out.print("수정하려는 회원 번호:");
+		MenuOutput.inputDataName("수정하려는 회원 번호");
 		String seq = in.nextLine();
 
 		// 수정하려는 유저 정보
@@ -126,7 +125,7 @@ public class UserCRUD {
 		Output.subTitle("회원 삭제");
 		System.out.println("삭제를 하고 싶지 않으면 엔터를 입력해주세요");
 		
-		System.out.print("삭제하려는 회원 번호:");
+		MenuOutput.inputDataName("삭제하려는 회원 번호");
 		String seq = in.nextLine();
 		
 		User us = checkTargetUser(seq);
@@ -155,13 +154,13 @@ public class UserCRUD {
 	
 	private static User checkTargetUser(String seq) {
 		
-		if(Integer.parseInt(seq) < 0 || Integer.parseInt(seq) > Data.lastUserSeq()) {
+		if(Integer.parseInt(seq) < 0 || Integer.parseInt(seq) > Data.getLastUserSeq()) {
 			System.out.println("잘못된 입력입니다.");
 			System.out.println("!다시 입력해주세요!");
 			while(true) {
 				seq = in.nextLine();
 				System.out.println(seq);
-				if(Integer.parseInt(seq) > 0 || Integer.parseInt(seq) < Data.lastUserSeq()) break;
+				if(Integer.parseInt(seq) > 0 || Integer.parseInt(seq) < Data.getLastUserSeq()) break;
 			}
 		} 
 		
