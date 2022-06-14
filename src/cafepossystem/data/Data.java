@@ -69,7 +69,7 @@ public class Data {
 		Data.loadCoffeeMenu();
 	}
 	
-	public static int lastMenuSeq() {	
+	public static int getLastMenuSeq() {	
 		return Integer.parseInt(Data.coffeeMenuList.get(Data.coffeeMenuList.size()-1).getSeq());
 	}
 	
@@ -134,7 +134,7 @@ public class Data {
 		Data.loadUser();
 	}
 	
-	public static int lastUserSeq() {	
+	public static int getLastUserSeq() {	
 		return Integer.parseInt(Data.userList.get(Data.userList.size()-1).getSeq());
 	}
 	
