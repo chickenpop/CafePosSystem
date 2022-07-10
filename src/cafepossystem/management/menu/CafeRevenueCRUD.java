@@ -19,8 +19,8 @@ public class CafeRevenueCRUD {
 		
 		this.now = Calendar.getInstance();
 		this.totalPrice = 0;
-		this.menuCnt = new int[Data.coffeeMenuList.size()];
-		this.priceCnt = new int[Data.coffeeMenuList.size()];
+		this.menuCnt = new int[Data.getLastMenuSeq()];
+		this.priceCnt = new int[Data.getLastMenuSeq()];
 		this.discount = 0;
 	}
 	
