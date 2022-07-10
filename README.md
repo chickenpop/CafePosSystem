@@ -3,13 +3,12 @@
 
 ## 개발 환경
 
-<img src="https://img.shields.io/badge/Eclipse%20IDE-2C2255?style=flat&logo=Eclipse%20IDE&logoColor=white"/> <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=Java&logoColor=white"/>
-
+<img src="https://img.shields.io/badge/Eclipse IDE-525C86?style=for-the-badge&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/JAVA-004088?style=for-the-badge&logo=JAVA&logoColor=white"> 
 
 ## 카페관리시스템 ERD
-![CafePosSystem](/CafePosSystem/images//%EC%B9%B4%ED%8E%98%EA%B4%80%EB%A6%AC%EC%8B%9C%EC%8A%A4%ED%85%9C.png)
+![카페관리시스템](https://user-images.githubusercontent.com/50548923/178140001-dfb48e0c-9c0a-4b83-b16b-e09a19299a83.png)
 
-- 자바 콘솔 프로젝트에서는 txt파일 데이터를 작업했고, ERD 모습은 이미지와 같습니다.
+- 자바 콘솔 프로젝트에서는 txt파일 데이터를 작업했고, DB프로젝트 이후 ERD 제작한 이미지입니다.
 
 ## 메뉴별 구현 기능
 
@@ -35,29 +34,28 @@
 
 ## 주요 실행화면
 
-![로그인](/CafePosSystem/images/%EC%B9%B4%ED%8E%98%EB%A1%9C%EA%B7%B8%EC%9D%B8.PNG) 
+![카페로그인](https://user-images.githubusercontent.com/50548923/178139937-7c314602-58ab-45de-97e8-0232f16e0243.PNG)
+![카페메인메뉴](https://user-images.githubusercontent.com/50548923/178139940-914ea0f0-80e3-4b78-9b2d-8e5bdfbda23a.PNG)
 
 - 로그인에 성공하면 메인 메뉴로 이동합니다.
 
-![메인화면](/CafePosSystem/images/%EC%B9%B4%ED%8E%98%EB%A9%94%EC%9D%B8%EB%A9%94%EB%89%B4.PNG)
-
 - 메인 화면입니다.
 
-![주문관리](/CafePosSystem/images/%EC%A3%BC%EB%AC%B8%EA%B4%80%EB%A6%AC.PNG)
-![주문이어하기](/CafePosSystem/images/%EC%A3%BC%EB%AC%B8%EC%9D%B4%EC%96%B4%ED%95%98%EA%B8%B0.PNG)
+![주문관리](https://user-images.githubusercontent.com/50548923/178139915-b68e94f9-80fe-4edd-96fd-9149a99eda12.PNG)
+![주문이어하기](https://user-images.githubusercontent.com/50548923/178139933-73e6fe45-44a7-43a7-85ee-940482e0261d.PNG)
 
 - 왼쪽이 주문화면으로 메뉴 번호와 수량을 입력하는 주문과정을 진행할 수 있습니다.
--  주문을 계속진행하는 경우 오른쪽 화면처럼 주문진행중이 표시됩니다.
+- 주문을 계속진행하는 경우 오른쪽 화면처럼 주문진행중이 표시됩니다.
 
 ## 토이 프로젝트를 하는 이유
 
 - 병원 예약 시스템은 팀프로젝트로 끝난 후에 진행했습니다. 개인 능력만으로 설계 및 구현을 해보고 싶어서 시작하게 되었습니다.
 
-- 자바의 스트림, 컬렉션를 연습합니다.
+- 자바의 정석과 이클립스, 깃 & 깃허브를 이용하여 진행합니다.
 
 - 데이터를 처리하는 혹은 출력을 관리하는 클래스 등 용도에 따라 구분하고 서로 상호작용적인 설계하려합니다.
 
-- +) 6월 5일부터 git 컨벤션 규칙에 따라 커밋을 연습합니다.
+- +) git 컨벤션 규칙에 따라 커밋을 연습합니다.
 
 ## 진행하면서 있었던 일
 
