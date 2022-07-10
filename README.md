@@ -1,26 +1,53 @@
 # CafePosSystem
-
-## 자바 콘솔 토이프로젝트<카페관리시스템>
+> 자바 콘솔 토이프로젝트로 카페관리시스템를 구현하였습니다
 
 ## 개발 환경
 
-<img src="https://img.shields.io/badge/Eclipse%20IDE-2C2255?style=flat&logo=Eclipse%20IDE&logoColor=white"/>
+<img src="https://img.shields.io/badge/Eclipse%20IDE-2C2255?style=flat&logo=Eclipse%20IDE&logoColor=white"/> <img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=Java&logoColor=white"/>
 
-## 개발 언어
 
-<img src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=Java&logoColor=white"/>
+## 카페관리시스템 ERD
+![CafePosSystem](/CafePosSystem/images//%EC%B9%B4%ED%8E%98%EA%B4%80%EB%A6%AC%EC%8B%9C%EC%8A%A4%ED%85%9C.png)
 
-  - JDK 11.02으로 진행하였습니다.
+- 자바 콘솔 프로젝트에서는 txt파일 데이터를 작업했고, ERD 모습은 이미지와 같습니다.
 
-## 주요 기능
+## 메뉴별 구현 기능
 
-- 주문관리(주문기능)
+- 메뉴관리, 카페에서 판매하는 메뉴의 CRUD기능
 
-- 메뉴관리
+- 회원관리, 카페에 단골을 관리하기 위해 만든 메뉴
+  - 회원 CRUD
+  - 회원의 포인트, 쿠폰 수 관리
 
-- 매출관리
+- 관리자 
+  - 로그인
+  - 로그아웃
 
-- 회원관리
+- 주문관리
+  - 주문 내역(비회원)
+  - 진행 중인 주문 취소
+  - 주문 내역(회원) : 포인트,쿠폰 적립, 쿠폰 사용
+
+- 매출 관리(연월일별)
+  - 매출액 출력
+  - 음료 판매량 출력 
+  - 쿠폰 사용에 따른 할인금액 출력
+
+## 주요 실행화면
+
+![로그인](/CafePosSystem/images/%EC%B9%B4%ED%8E%98%EB%A1%9C%EA%B7%B8%EC%9D%B8.PNG) 
+
+- 로그인에 성공하면 메인 메뉴로 이동합니다.
+
+![메인화면](/CafePosSystem/images/%EC%B9%B4%ED%8E%98%EB%A9%94%EC%9D%B8%EB%A9%94%EB%89%B4.PNG)
+
+- 메인 화면입니다.
+
+![주문관리](/CafePosSystem/images/%EC%A3%BC%EB%AC%B8%EA%B4%80%EB%A6%AC.PNG)
+![주문이어하기](/CafePosSystem/images/%EC%A3%BC%EB%AC%B8%EC%9D%B4%EC%96%B4%ED%95%98%EA%B8%B0.PNG)
+
+- 왼쪽이 주문화면으로 메뉴 번호와 수량을 입력하는 주문과정을 진행할 수 있습니다.
+-  주문을 계속진행하는 경우 오른쪽 화면처럼 주문진행중이 표시됩니다.
 
 ## 토이 프로젝트를 하는 이유
 
@@ -55,40 +82,4 @@
    - 매개변수를 추가하여 연/월/일을 구분하고, 공통되는 코드를 묶어 메소드로 변경하였습니다
    - 예기) 회원관리
    - 회원 수정과 삭제에서 같은 방식으로 회원을 검색해서 메소드로 변경하였습니다.  
-
----
-
-### 공통 기능
-
-- 아이템 수에 따른 페이지 이동 기능
-
-### 메뉴별 기능
-
-- 메뉴관리, 카페에서 판매하는 메뉴의 CRUD기능
-
-- 회원관리, 카페에 단골을 관리하기 위해 만든 메뉴
-  - 회원 CRUD
-  - 회원의 포인트, 쿠폰 수 관리
-
-- 관리자 
-  - 로그인
-  - 로그아웃
-
-- 주문관리
-  - 주문 내역(비회원)
-  - 진행 중인 주문 취소
-  - 주문 내역(회원) : 포인트,쿠폰 적립, 쿠폰 사용
-
-- 매출 관리(연월일별)
-  - 매출액 출력
-  - 음료 판매량 출력 
-  - 쿠폰 사용에 따른 할인금액 출력
-
----
-
-## 진행
-
-- 테스트 진행중
-
-- 출력되는 디자인 수정중
 
