@@ -314,6 +314,7 @@ public class CafeOrderMain {
 			Data.loadDiscount();
 		}		
 	
+		discount = 0;
 		totalPrice = 0;
 	}
 
